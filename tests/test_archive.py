@@ -1,8 +1,4 @@
-"""Regression tests for the real full-tree catalog/audit scripts.
-
-Fixtures are deliberately synthetic: they verify archival integrity and formats,
-not the editorial accuracy of any research report.
-"""
+"""End-to-end tests for full-tree archive/catalog integrity; fixtures are synthetic."""
 from __future__ import annotations
 
 import hashlib
@@ -29,12 +25,12 @@ class ArchiveTests(unittest.TestCase):
             shutil.copy2(SOURCE / "scripts" / script, self.root / "scripts" / script)
         for name in ("README.md", "AGENTS.md", "index.html", ".nojekyll"):
             (self.root / name).write_text("fixture", encoding="utf-8")
-        self.run("build_catalog.py")
+        self.run_script("build_catalog.py")
 
     def tearDown(self):
         self.work.cleanup()
 
-    def run(self, script, *args):
+    def run_script(self, script, *args):
         return subprocess.run(
             [sys.executable, str(self.root / "scripts" / script), *args],
             cwd=self.root, text=True, capture_output=True, check=False,
@@ -76,13 +72,13 @@ class ArchiveTests(unittest.TestCase):
         return directory
 
     def assert_audit_ok(self):
-        check = self.run("build_catalog.py", "--check")
+        check = self.run_script("build_catalog.py", "--check")
         self.assertEqual(check.returncode, 0, check.stdout + check.stderr)
-        audit = self.run("audit.py")
+        audit = self.run_script("audit.py")
         self.assertEqual(audit.returncode, 0, audit.stdout + audit.stderr)
 
     def assert_audit_fails(self, expected_message):
-        audit = self.run("audit.py")
+        audit = self.run_script("audit.py")
         self.assertNotEqual(audit.returncode, 0, audit.stdout + audit.stderr)
         self.assertIn(expected_message, audit.stdout + audit.stderr)
 
@@ -92,7 +88,7 @@ class ArchiveTests(unittest.TestCase):
     def test_three_agents_are_indexed_without_data_loss(self):
         for agent in KINDS:
             self.add_report(agent)
-        self.run("build_catalog.py")
+        self.run_script("build_catalog.py")
         self.assert_audit_ok()
         catalog = json.loads((self.root / "catalog.json").read_text())
         self.assertEqual(len(catalog["reports"]), 3)
@@ -100,7 +96,7 @@ class ArchiveTests(unittest.TestCase):
 
     def test_genuine_partial_report_is_marked_degraded(self):
         self.add_report(formats=("pdf",))
-        self.run("build_catalog.py")
+        self.run_script("build_catalog.py")
         self.assert_audit_ok()
         report = json.loads((self.root / "catalog.json").read_text())["reports"][0]
         self.assertEqual(report["status"], "DEGRADED")
@@ -108,19 +104,19 @@ class ArchiveTests(unittest.TestCase):
 
     def test_tampered_attachment_is_rejected(self):
         directory = self.add_report()
-        self.run("build_catalog.py")
+        self.run_script("build_catalog.py")
         (directory / "report.pdf").write_bytes(b"%PDF-1.4\nchanged\n%%EOF")
         self.assert_audit_fails("Attachment bytes/hash mismatch")
 
     def test_orphan_attachment_is_rejected(self):
         directory = self.add_report()
-        self.run("build_catalog.py")
+        self.run_script("build_catalog.py")
         (directory / "report-copy.pdf").write_bytes(b"%PDF-1.4\n%%EOF")
         self.assert_audit_fails("Orphan or noncanonical file")
 
     def test_stale_catalog_is_rejected(self):
         self.add_report()
-        self.assertNotEqual(self.run("build_catalog.py", "--check").returncode, 0)
+        self.assertNotEqual(self.run_script("build_catalog.py", "--check").returncode, 0)
         self.assert_audit_fails("Stale/incomplete catalog")
 
     def test_corrupted_office_package_is_rejected(self):
@@ -132,7 +128,7 @@ class ArchiveTests(unittest.TestCase):
         manifest["files"]["docx"]["bytes"] = doc.stat().st_size
         manifest["files"]["docx"]["sha256"] = hashlib.sha256(doc.read_bytes()).hexdigest()
         manifest_path.write_text(json.dumps(manifest))
-        self.run("build_catalog.py")
+        self.run_script("build_catalog.py")
         self.assert_audit_fails("Invalid OOXML ZIP")
 
     def test_run_folder_and_manifest_disagreement_is_rejected(self):
@@ -141,7 +137,7 @@ class ArchiveTests(unittest.TestCase):
         manifest = json.loads(manifest_path.read_text())
         manifest["date"] = "2026-09-20"
         manifest_path.write_text(json.dumps(manifest))
-        self.run("build_catalog.py")
+        self.run_script("build_catalog.py")
         self.assert_audit_fails("Manifest and folder disagree")
 
 
