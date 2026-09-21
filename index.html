@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>cron-news · 研究情报档案</title>
+  <style>
+    :root{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:#15253a;background:#f5f8fd}*{box-sizing:border-box}body{margin:0}a{color:#145eb0}.wrap{max-width:1120px;margin:auto;padding:32px 20px 60px}header{background:linear-gradient(120deg,#133c72,#1768b8);color:white;padding:44px 0}header .wrap{padding-top:0;padding-bottom:0}h1{font-size:clamp(28px,5vw,44px);margin:0 0 10px}header p{max-width:740px;line-height:1.7;opacity:.9;margin:0}.toolbar{display:flex;flex-wrap:wrap;gap:12px;margin:24px 0}.toolbar label{display:grid;gap:5px;font-weight:600;font-size:13px;flex:1;min-width:170px}.toolbar input,.toolbar select{font:inherit;padding:11px;border:1px solid #ccd8e9;border-radius:9px;background:white;color:#15253a}.meta{color:#56677b;margin:12px 0}.items{display:grid;gap:14px}.entry{background:#fff;border:1px solid #dbe4f1;border-radius:14px;padding:20px;box-shadow:0 3px 15px #162a4408}.entry h2{font-size:19px;margin:8px 0}.entry p{color:#4b5b6f;line-height:1.6;margin:7px 0 15px}.tag{display:inline-block;font-size:12px;background:#e8f2ff;color:#14549a;padding:4px 9px;border-radius:18px;margin-right:8px}.links{display:flex;gap:9px;flex-wrap:wrap}.links a{background:#eff5fc;border:1px solid #cce0fa;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:600}.links a:hover,.links a:focus{background:#d8eaff}.notice{background:white;border:1px dashed #c4d2e4;border-radius:12px;padding:18px;color:#52647a}footer{padding-top:28px;font-size:13px;color:#64748b}@media(max-width:600px){header{padding:28px 0}.wrap{padding:22px 14px}.entry{padding:15px}}
+  </style>
+</head>
+<body>
+<header><div class="wrap"><h1>研究情报档案</h1><p>市场与新闻联播 · 科技与论文 · 中国研究媒体。按任务和日期查询已归档报告，打开或下载 PDF / Word / PowerPoint。仅显示仓库中确实存在并已登记的文件。</p></div></header>
+<main class="wrap">
+  <section class="toolbar" aria-label="筛选报告"><label>研究类别<select id="agent"><option value="">全部任务</option><option value="market">市场与新闻联播</option><option value="tech">科技与论文</option><option value="china">中国研究媒体</option></select></label><label>日期<input type="date" id="date"></label><label>关键词<input type="search" id="query" placeholder="标题、摘要、运行标识"></label></section>
+  <p class="meta" id="count" role="status">正在载入报告目录…</p><div class="items" id="items"></div>
+  <footer>所有报告均为公开研究材料，不构成投资建议。<a href="https://github.com/1998x-stack/cron-news">GitHub 仓库</a> · <a href="README.md">项目说明</a> · <a href="AGENTS.md">归档规范</a></footer>
+</main>
+<script>
+'use strict';
+const names={market:'市场与新闻联播',tech:'科技与论文',china:'中国研究媒体'};
+const allowed=/^reports\/(market|tech|china)\/20\d{2}\/\d{2}\/\d{2}\/(MARKET|TECH|CHINA)-20\d{2}-\d{2}-\d{2}-(?:\d{4}|MANUAL-\d{4})\/report\.(pdf|docx|pptx)$/;
+const $=id=>document.getElementById(id);
+let all=[];
+function render(){
+  const agent=$('agent').value,date=$('date').value,query=$('query').value.trim().toLocaleLowerCase();
+  const rows=all.filter(r=>(!agent||r.agent===agent)&&(!date||r.date===date)&&(!query||[r.title,r.summary,r.run_key].join(' ').toLocaleLowerCase().includes(query)));
+  $('count').textContent=`共 ${rows.length} 份匹配报告 · 已归档 ${all.length} 份`;
+  $('items').replaceChildren();
+  if(!rows.length){const empty=document.createElement('div');empty.className='notice';empty.textContent=all.length?'没有匹配的报告，请调整筛选条件。':'暂无已归档报告。定时任务成功上传并通过全库校验后，会自动显示在这里。';$('items').append(empty);return;}
+  for(const r of rows){
+    const article=document.createElement('article');article.className='entry';
+    const tag=document.createElement('span');tag.className='tag';tag.textContent=names[r.agent]||'未知任务';article.append(tag);
+    const when=document.createElement('span');when.className='tag';when.textContent=`${r.date} ${r.scheduled_time} · ${r.status}`;article.append(when);
+    const title=document.createElement('h2');title.textContent=r.title;article.append(title);
+    const summary=document.createElement('p');summary.textContent=r.summary;article.append(summary);
+    const links=document.createElement('div');links.className='links';
+    for(const [fmt,label] of [['pdf','PDF'],['docx','Word'],['pptx','PPT']]){
+      const path=r.files?.[fmt];if(typeof path!=='string'||!allowed.test(path)||!path.includes('/'+r.run_key+'/')||!path.startsWith('reports/'+r.agent+'/'))continue;
+      const link=document.createElement('a');link.href=path;link.textContent=`打开 / 下载 ${label}`;link.setAttribute('aria-label',`${r.title} - ${label}`);links.append(link);
+    }
+    if(!links.children.length){const missing=document.createElement('span');missing.textContent='暂无可用附件';links.append(missing)}
+    article.append(links);$('items').append(article);
+  }
+}
+for(const id of ['agent','date','query'])$(id).addEventListener('input',render);
+fetch('catalog.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(data=>{if(data.schema_version!==1||!Array.isArray(data.reports))throw new Error('目录格式不兼容');all=data.reports;render()}).catch(err=>{$('count').textContent='报告目录加载失败';const warning=document.createElement('div');warning.className='notice';warning.textContent='无法读取 catalog.json：'+err.message;$('items').append(warning)});
+</script>
+</body>
+</html>
