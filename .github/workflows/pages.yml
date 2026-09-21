@@ -1,0 +1,56 @@
+name: Publish audited report website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'catalog.json'
+      - 'README.md'
+      - 'AGENTS.md'
+      - '.nojekyll'
+      - 'reports/**'
+      - 'scripts/**'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  validate-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout the exact commit
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Reject stale indexes and broken report archives
+        run: |
+          python3 scripts/build_catalog.py --check
+          python3 scripts/audit.py
+      - name: Prepare public files only
+        run: |
+          mkdir -p _site
+          cp index.html catalog.json README.md AGENTS.md .nojekyll _site/
+          cp -R reports _site/reports
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload validated Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
