@@ -1,49 +1,56 @@
-# cron-news | Research intelligence archive
+# cron-news · Research intelligence archive
 
-A public, versioned archive for three scheduled research agents. **GitHub is the document archive; Notion is not part of the pipeline.** Reports are informational and not investment advice.
+Three scheduled research agents publish **public, validated** market, computer science, and China-media reports to one canonical GitHub archive. Notion is not used. No private correspondence, credentials, employer materials, personal data, or copyrighted full texts belong in this public repository.
 
-## Agents and cadence (Asia/Shanghai)
+## Schedule (Asia/Shanghai)
 
-| Agent | RUN_KEY prefix | Schedule | Scope |
+| Agent | RUN_KEY | Time | Coverage |
 | --- | --- | --- | --- |
-| Market & News Lianbo | `MARKET` | Daily 08:00, 12:00, 20:00 | Global markets, China policy, market evidence, sectors and companies |
-| CS & AI Research | `TECH` | Daily 08:00 | AI/Agent, papers, open-source evidence and cross-CS knowledge |
-| China Media Research | `CHINA` | Daily 08:00, 20:00 | China economy, society, policy and international media comparison |
+| Market & News Lianbo | `MARKET-YYYY-MM-DD-HHMM` | Daily 08:00, 12:00, 20:00 | Global markets, official China policy, price evidence and sectors |
+| CS & AI Research | `TECH-YYYY-MM-DD-0800` | Daily 08:00 | AI/Agent, papers, open source, cross-CS engineering |
+| China Media Research | `CHINA-YYYY-MM-DD-HHMM` | Daily 08:00, 20:00 | China economy, society, policy and international media comparison |
 
-## Canonical storage
+## Canonical file layout
 
 ```text
 cron-news/
-├── README.md                 # Human-facing project introduction
-├── AGENTS.md                 # Mandatory agent publishing and cleanup contract
-├── index.html                # GitHub Pages landing page
-├── catalog.json              # Generated report index, never hand-edited
-├── .nojekyll                 # Serve the repository as static content
-├── .github/workflows/audit.yml
-├── scripts/build_catalog.py  # Deterministic report index generator
-├── scripts/audit.py          # Document-entropy and link integrity guard
+├── README.md
+├── AGENTS.md                    # Mandatory policy for all three agents
+├── index.html                   # GitHub Pages search / download UI
+├── catalog.json                 # Machine-generated from ALL manifests
+├── .nojekyll
+├── .github/workflows/
+│   ├── audit.yml                # Validates each push and pull request
+│   └── pages.yml                # Validates BEFORE deploying GitHub Pages
+├── scripts/
+│   ├── build_catalog.py
+│   └── audit.py
 └── reports/
     ├── market/YYYY/MM/DD/MARKET-YYYY-MM-DD-HHMM/
     ├── tech/YYYY/MM/DD/TECH-YYYY-MM-DD-0800/
     └── china/YYYY/MM/DD/CHINA-YYYY-MM-DD-HHMM/
         ├── manifest.json
-        ├── report.pdf         # When successfully generated
-        ├── report.docx        # When successfully generated
-        └── report.pptx        # When successfully generated
+        ├── report.pdf             # Only if genuinely produced and verified
+        ├── report.docx            # Only if genuinely produced and verified
+        └── report.pptx            # Only if genuinely produced and verified
 ```
 
-Each scheduled run has exactly **one canonical directory** and **one manifest**. No root-level report attachments, alternative directories, version suffixes (`final`, `v2`, `copy`) or duplicate publications. A failed format must be recorded as missing in the manifest, never linked as if it exists. Never overwrite a past run with a different run key. Historical reports are immutable except for a documented correction of the same run.
+Every completed report belongs to exactly one run directory. A `manifest.json` records public metadata and the actual formats present, using their exact repository-relative path, byte length, and SHA-256. Missing formats are not linked. Past runs must not be overwritten or moved without an audited, documented migration. Do not create `latest`, `final`, `copy`, or alternate directories. An email-only fallback does not count as GitHub archival success.
 
-## Pages
+## GitHub Pages — one-time owner setup
 
-After the files are committed, configure **Settings → Pages → Build and deployment → Source: Deploy from a branch → Branch: `main` → Folder: `/(root)` → Save**. Site URL after GitHub finishes publication: `https://1998x-stack.github.io/cron-news/`. The root `index.html` reads `catalog.json` and lists verified PDF, Word and PowerPoint links. An empty catalog means no reports have been archived yet; it is not a publishing error.
+The website is built by `.github/workflows/pages.yml` and its deployment is gated on both archive checks succeeding. **The GitHub repository owner must first enable Pages**: open repository **Settings → Pages → Build and deployment → Source: GitHub Actions**. Do **not** select “Deploy from a branch” when using this workflow. If the site is not enabled, a workflow file alone does not establish a working URL. Once a deployment succeeds, check: <https://1998x-stack.github.io/cron-news/>. The homepage reads `catalog.json` and provides PDF, Word and PowerPoint links for actually archived formats; an empty archive displays no reports.
 
-## Publishing a run
+The Pages artifact includes only `index.html`, `catalog.json`, `README.md`, `AGENTS.md`, `.nojekyll`, and `reports/`. No GitHub Actions, scripts, unrelated root files, secrets, or local working files are deployed. Confirm the site's actual URL and report links after each deployment; publication can lag behind the source commit.
 
-1. Create the canonical run directory and write its generated report attachments. A document exists in the manifest only after upload/download and format validation succeeds.
-2. Write `manifest.json` with schema version `1`, exact run key, agent, date/time, factual summary, publication status, and a `files` mapping with present relative paths, sizes and SHA-256 hashes. Do not write secrets or personal data; everything in this public repository is public.
-3. Update `catalog.json` by running `python3 scripts/build_catalog.py`, not by freeform appending entries. Run `python3 scripts/audit.py` and resolve every error **before** the archival commit. If the audit fails, do not claim the archive is complete.
-4. Commit run files, the regenerated catalog and any necessary repairs atomically when possible. Confirm the commit and that links resolve. Then send Gmail once using the run key; if attachment/email delivery fails, report it distinctly from repository archival success.
-5. On every subsequent run, check the *entire archive* for folder drift, orphan files, duplicate run keys, stale indexes, missing reports, broken links and unexpected binary types. Never fix by deleting or relocating historical files without checking existing references and recording the migration.
+## Publishing one run
 
-See [AGENTS.md](AGENTS.md) for the binding contract and the tools in [`scripts/`](scripts/). The website is a public browse/download interface, not a private document store.
+1. At execution start, read the latest `README.md` and `AGENTS.md`. Research with primary sources, review counter-evidence, then produce genuine DOCX/PDF/PPTX files if feasible. Check that all content is safe for publication in a public repository.
+2. Fetch the complete current `main` report tree and stage a single canonical run directory. Upload actual binary files through a binary-capable GitHub API or authorized Git transport; validate signatures/OOXML structures and downloaded bytes. A UTF-8 file writer cannot upload a PDF or Office binary just by giving it a `.pdf`, `.docx`, or `.pptx` extension.
+3. Write `manifest.json` with exact verified filenames, sizes and SHA-256; generate `catalog.json` from **every** manifest using `python3 scripts/build_catalog.py`. Do not append a single new entry manually or remove other agents' entries.
+4. Run `python3 scripts/build_catalog.py --check` and `python3 scripts/audit.py` on the **complete local checkout**, including the new run, BEFORE committing. Resolve all errors; do not publish an unvalidated or partially indexed run.
+5. At 08:00 all three agents may publish concurrently. Recheck the current `main` SHA before pushing. If it has changed, update the local tree with all other agents' work, rebuild the catalog, and repeat the full audit. Commit only via a non-forced fast-forward update. Never overwrite another run's manifest or report.
+6. Verify the GitHub commit and each actual PDF/DOCX/PPTX link, then verify the GitHub Pages deployment and page links. Distinguish GitHub archival, Pages publication, and one-time Gmail delivery as separate statuses. Gmail must use the exact RUN_KEY as its deduplication key and never blindly resend an uncertain delivery.
+7. Every execution must check the complete archive for duplicated run keys, noncanonical placement, unindexed binaries, missing files, file-size/hash inconsistencies, stale indexes, broken links, and unexpected changes to historical material. Review private-information risks manually as well as with automatic checks. Report any blocker rather than claiming an unverified success.
+
+See [AGENTS.md](AGENTS.md) for the full, mandatory research-agent contract. Reports are informational, not investment advice.
