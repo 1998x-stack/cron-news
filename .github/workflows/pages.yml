@@ -11,6 +11,7 @@ on:
       - '.nojekyll'
       - 'reports/**'
       - 'scripts/**'
+      - 'tests/**'
       - '.github/workflows/pages.yml'
   workflow_dispatch:
 
@@ -36,6 +37,8 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Archive-entropy regression tests
+        run: python3 -m unittest discover -s tests -v
       - name: Reject stale indexes and broken report archives
         run: |
           python3 scripts/build_catalog.py --check
