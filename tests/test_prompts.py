@@ -39,6 +39,20 @@ class PromptContractTests(unittest.TestCase):
                 self.assertNotIn("2484230700", content)
                 self.assertNotIn("xieminghack", content)
 
+    def test_market_workflow_guards_previous_run_failures(self):
+        """A future prompt refactor must preserve these safeguards."""
+        market = (PROMPTS / "market.md").read_text(encoding="utf-8")
+        for invariant in (
+            "同一 RUN_KEY", "不再发该 RUN_KEY 邮件", "SENT", "同一批冻结后的真实附件",
+            "邮件发送/网页发布结果无关", "私有执行回执", "公开 URL", "内部数据工具",
+            "create_blob(encoding=base64)", "create_tree", "create_commit", "update_ref(force=false)",
+            "scripts/build_catalog.py --check", "scripts/audit.py", "unittest discover",
+            "ARCHIVE_BLOCKED", "PAGES_PENDING", "PAGES_VERIFIED", "end_to_end_status",
+        ):
+            with self.subTest(rule=invariant):
+                self.assertIn(invariant, market)
+        self.assertNotRegex(market, r"(?i)[\w.+-]+@[\w.-]+\.[a-z]{2,}")
+
 
 if __name__ == "__main__":
     unittest.main()
