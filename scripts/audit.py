@@ -12,7 +12,7 @@ from pathlib import Path
 from build_catalog import ROOT, REPORTS, CATALOG, render
 
 AGENTS = {"market": "MARKET", "tech": "TECH", "china": "CHINA"}
-FORMATS = {"pdf": "application/pdf", "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document", "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation"}
+FORMATS = {"pdf", "docx", "pptx"}
 REQUIRED = {"schema_version", "run_key", "agent", "date", "scheduled_time", "title", "summary", "status", "files"}
 errors: list[str] = []
 
@@ -71,7 +71,7 @@ def main() -> int:
         time = data["scheduled_time"]
         if not isinstance(time, str) or not re.fullmatch(r"(?:[01]\d|2[0-3]):[0-5]\d", time):
             fail(f"Invalid scheduled time: {rel}")
-        elif run_key.endswith("-" + time.replace(":", "")) is False:
+        elif not run_key.endswith("-" + time.replace(":", "")):
             fail(f"RUN_KEY/time mismatch: {rel}")
         if run_key.casefold() in seen:
             fail(f"Duplicate RUN_KEY: {run_key}")
@@ -79,10 +79,10 @@ def main() -> int:
         if not isinstance(data["title"], str) or not data["title"].strip() or not isinstance(data["summary"], str) or not data["summary"].strip():
             fail(f"Missing public title/summary: {rel}")
         files = data["files"]
-        if not isinstance(files, dict) or not files or set(files) - FORMATS.keys():
+        if not isinstance(files, dict) or not files or set(files) - FORMATS:
             fail(f"No verified attachments or unexpected format: {rel}")
             continue
-        expected_status = "FULL" if set(files) == set(FORMATS) else "DEGRADED"
+        expected_status = "FULL" if set(files) == FORMATS else "DEGRADED"
         if data["status"] != expected_status:
             fail(f"Invalid attachment status: {rel}")
         for fmt, info in files.items():
@@ -109,8 +109,12 @@ def main() -> int:
         for file in REPORTS.rglob("*"):
             if file.is_symlink():
                 fail(f"Symlinks forbidden: {file.relative_to(ROOT)}")
-            elif file.is_file() and file.name != "manifest.json" and file.resolve() not in referenced:
-                fail(f"Orphan or noncanonical file: {file.relative_to(ROOT)}")
+            elif file.is_file():
+                # The ONLY permitted unindexed files are placeholders for the three agent directories.
+                if file.name == ".gitkeep" and file.parent in {REPORTS / agent for agent in AGENTS}:
+                    continue
+                if file.name != "manifest.json" and file.resolve() not in referenced:
+                    fail(f"Orphan or noncanonical file: {file.relative_to(ROOT)}")
     try:
         if CATALOG.read_text(encoding="utf-8") != render():
             fail("Stale/incomplete catalog: run python3 scripts/build_catalog.py")
