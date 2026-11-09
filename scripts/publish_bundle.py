@@ -18,7 +18,7 @@ import zipfile
 from pathlib import Path
 
 DEFAULT_REPO = "https://github.com/1998x-stack/cron-news.git"
-FORMATS = {"pdf", "docx", "pptx"}
+FORMATS = {"md", "json", "pdf", "docx", "pptx"}
 REQUIRED = {"schema_version", "run_key", "agent", "date", "scheduled_time", "title", "summary", "status", "files"}
 
 
@@ -36,7 +36,7 @@ def load_bundle(bundle: Path) -> tuple[dict, dict[str, bytes]]:
         raise ValueError("Expected precisely one canonical manifest")
     manifest_name = manifests[0]
     manifest = json.loads(entries[manifest_name])
-    if set(manifest) != REQUIRED or manifest["schema_version"] != 1:
+    if set(manifest) != REQUIRED or manifest["schema_version"] not in {1, 2}:
         raise ValueError("Incorrect manifest schema")
     agent, date, key = manifest["agent"], manifest["date"], manifest["run_key"]
     if agent not in {"market", "tech", "china"} or not re.fullmatch(
@@ -56,18 +56,37 @@ def load_bundle(bundle: Path) -> tuple[dict, dict[str, bytes]]:
     files = manifest["files"]
     if not isinstance(files, dict) or not files or set(files) - FORMATS:
         raise ValueError("Bundle contains no valid formats")
-    if manifest["status"] != ("FULL" if set(files) == FORMATS else "DEGRADED"):
-        raise ValueError("Attachment availability status does not match manifest")
-    expected = {manifest_name} | {prefix + "report." + fmt for fmt in files}
+    if manifest["schema_version"] == 1:
+        if set(files) - {"pdf", "docx", "pptx"} or manifest["status"] != ("FULL" if set(files) == {"pdf", "docx", "pptx"} else "DEGRADED"):
+            raise ValueError("Legacy attachment availability status mismatch")
+    elif not {"md", "json"} <= set(files) or manifest["status"] not in {"PUBLISHED", "DEGRADED"}:
+        raise ValueError("v2 requires Markdown/JSON and valid status")
+    expected = {manifest_name} | {prefix + ("data.json" if fmt == "json" else "report." + fmt) for fmt in files}
     if set(entries) != expected:
         raise ValueError(f"Unexpected/missing bundle paths: {sorted(set(entries) ^ expected)}")
     for fmt, meta in files.items():
-        name = prefix + "report." + fmt
+        name = prefix + ("data.json" if fmt == "json" else "report." + fmt)
         raw = entries[name]
         if set(meta) != {"path", "bytes", "sha256"} or meta["path"] != name:
             raise ValueError("Noncanonical file metadata: " + fmt)
         if meta["bytes"] != len(raw) or meta["sha256"] != hashlib.sha256(raw).hexdigest():
             raise ValueError("Size or SHA-256 mismatch: " + name)
+        if fmt == "md":
+            try:
+                if len(raw.decode("utf-8").strip()) < 120 or not raw.lstrip().startswith(b"#"):
+                    raise ValueError("Invalid Markdown: " + name)
+            except UnicodeDecodeError as exc:
+                raise ValueError("Invalid Markdown encoding: " + name) from exc
+        if fmt == "json":
+            detail = json.loads(raw.decode("utf-8"))
+            if detail.get("schema_version") != 1 or detail.get("run_key") != key or detail.get("agent") != agent:
+                raise ValueError("Invalid data.json identity: " + name)
+            if not all(isinstance(detail.get(k), list) for k in ("signals", "indices", "sources")) or not isinstance(detail.get("quality"), dict):
+                raise ValueError("Missing research data lists/quality: " + name)
+            if not re.fullmatch(r"20\d\d-\d\d-\d\dT\d\d:\d\d:\d\d[+]08:00", str(detail.get("as_of", ""))):
+                raise ValueError("Invalid as_of timestamp: " + name)
+            if manifest["status"] == "PUBLISHED" and not detail["sources"]:
+                raise ValueError("No sources for published report: " + name)
         if fmt == "pdf" and (not raw.startswith(b"%PDF-") or b"%%EOF" not in raw[-2048:]):
             raise ValueError("Invalid PDF: " + name)
         if fmt in {"docx", "pptx"}:

@@ -141,5 +141,63 @@ class ArchiveTests(unittest.TestCase):
         self.assert_audit_fails("Manifest and folder disagree")
 
 
+    def add_structured_market(self):
+        """A real v2 report contains sourceable Markdown + JSON, not fake binaries."""
+        key = "MARKET-2026-09-21-2030"
+        directory = self.root / "reports" / "market" / "2026" / "09" / "21" / key
+        directory.mkdir(parents=True, exist_ok=True)
+        narrative = "# 市场及新闻联播研究日报\n\n" + (
+            "本报告用于校验归档格式与实际来源，所有内容均为测试合成材料，不包含真实市场观点。\n"
+            "测试版本只核对可追溯来源、文件字节、哈希与结构化元数据，不构建虚假收益预测。\n" * 3
+        )
+        detail = {
+            "schema_version": 1,
+            "run_key": key, "agent": "market", "as_of": "2026-09-21T20:30:00+08:00",
+            "market_date": None, "signals": [],
+            "indices": [{"name": "synthetic missing", "value": None, "change_pct": None,
+                         "as_of": "2026-09-21", "source_url": "https://example.org"}],
+            "sources": [{"title": "synthetic fixture", "url": "https://example.org"}],
+            "quality": {"status": "PARTIAL", "gaps": ["synthetic test only"]},
+        }
+        payload = {"md": narrative.encode("utf-8"),
+                   "json": (json.dumps(detail, ensure_ascii=False, indent=2) + "\n").encode("utf-8")}
+        filenames = {"md": "report.md", "json": "data.json"}
+        files = {}
+        for fmt, raw in payload.items():
+            target = directory / filenames[fmt]
+            target.write_bytes(raw)
+            files[fmt] = {"path": target.relative_to(self.root).as_posix(),
+                          "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest()}
+        manifest = {"schema_version": 2, "run_key": key, "agent": "market",
+                    "date": "2026-09-21", "scheduled_time": "20:30",
+                    "title": "Synthetic research fixture", "summary": "Published fixture for tests",
+                    "status": "PUBLISHED", "files": files}
+        (directory / "manifest.json").write_text(json.dumps(manifest), encoding="utf-8")
+        return directory
+
+    def test_structured_v2_with_null_market_data_is_valid(self):
+        self.add_structured_market()
+        self.run_script("build_catalog.py")
+        self.assert_audit_ok()
+        catalog = json.loads((self.root / "catalog.json").read_text())
+        self.assertEqual(catalog["schema_version"], 2)
+        self.assertEqual(set(catalog["reports"][0]["files"]), {"md", "json"})
+
+    def test_structured_v2_rejects_mismatched_json_identity(self):
+        directory = self.add_structured_market()
+        detail_path = directory / "data.json"
+        detail = json.loads(detail_path.read_text(encoding="utf-8"))
+        detail["run_key"] = "MARKET-2026-09-20-2030"
+        detail_path.write_text(json.dumps(detail), encoding="utf-8")
+        manifest_path = directory / "manifest.json"
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        raw = detail_path.read_bytes()
+        manifest["files"]["json"]["bytes"] = len(raw)
+        manifest["files"]["json"]["sha256"] = hashlib.sha256(raw).hexdigest()
+        manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+        self.run_script("build_catalog.py")
+        self.assert_audit_fails("Invalid data.json identity/schema")
+
+
 if __name__ == "__main__":
     unittest.main()

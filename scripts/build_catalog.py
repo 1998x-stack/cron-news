@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""Build the deterministic GitHub Pages catalog from canonical report manifests."""
+"""Generate deterministic Pages catalog from every v1/v2 research manifest."""
 from __future__ import annotations
-
 import argparse
 import json
 from pathlib import Path
@@ -9,33 +8,28 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 REPORTS = ROOT / "reports"
 CATALOG = ROOT / "catalog.json"
-
+FORMAT_ORDER = ("md", "json", "pdf", "docx", "pptx")
 
 def generate() -> dict:
     entries = []
     for file in sorted(REPORTS.glob("*/*/*/*/*/manifest.json")) if REPORTS.exists() else []:
-        data = json.loads(file.read_text(encoding="utf-8"))
+        d = json.loads(file.read_text(encoding="utf-8"))
         entries.append({
-            "run_key": data["run_key"],
-            "agent": data["agent"],
-            "date": data["date"],
-            "scheduled_time": data["scheduled_time"],
-            "title": data["title"],
-            "summary": data["summary"],
-            "status": data["status"],
-            "files": {fmt: data["files"][fmt]["path"] for fmt in ("pdf", "docx", "pptx") if fmt in data["files"]},
+            "run_key": d["run_key"], "agent": d["agent"], "date": d["date"],
+            "scheduled_time": d["scheduled_time"], "title": d["title"],
+            "summary": d["summary"], "status": d["status"],
+            "schema_version": d["schema_version"],
+            "files": {fmt: d["files"][fmt]["path"] for fmt in FORMAT_ORDER if fmt in d["files"]},
         })
-    entries.sort(key=lambda x: (x["date"], x["scheduled_time"], x["run_key"]), reverse=True)
-    return {"schema_version": 1, "reports": entries}
-
+    entries.sort(key=lambda d: (d["date"], d["scheduled_time"], d["run_key"]), reverse=True)
+    return {"schema_version": 2, "reports": entries}
 
 def render() -> str:
     return json.dumps(generate(), ensure_ascii=False, indent=2) + "\n"
 
-
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--check", action="store_true", help="Fail if committed catalog differs from manifests")
+    parser.add_argument("--check", action="store_true")
     args = parser.parse_args()
     expected = render()
     if args.check:
@@ -47,7 +41,6 @@ def main() -> int:
     CATALOG.write_text(expected, encoding="utf-8")
     print(f"Updated catalog.json: {len(generate()['reports'])} reports")
     return 0
-
 
 if __name__ == "__main__":
     raise SystemExit(main())

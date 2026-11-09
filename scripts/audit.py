@@ -12,7 +12,8 @@ from pathlib import Path
 from build_catalog import ROOT, REPORTS, CATALOG, render
 
 AGENTS = {"market": "MARKET", "tech": "TECH", "china": "CHINA"}
-FORMATS = {"pdf", "docx", "pptx"}
+FORMATS = {"md", "json", "pdf", "docx", "pptx"}
+LEGACY_FORMATS = {"pdf", "docx", "pptx"}
 REQUIRED = {"schema_version", "run_key", "agent", "date", "scheduled_time", "title", "summary", "status", "files"}
 errors: list[str] = []
 
@@ -53,7 +54,7 @@ def main() -> int:
         except (OSError, ValueError) as exc:
             fail(f"Unreadable manifest {rel}: {exc}")
             continue
-        if set(data) != REQUIRED or data.get("schema_version") != 1:
+        if set(data) != REQUIRED or data.get("schema_version") not in {1, 2}:
             fail(f"Unexpected manifest schema: {rel}")
             continue
         date = f"{yyyy}-{mm}-{dd}"
@@ -82,14 +83,17 @@ def main() -> int:
         if not isinstance(files, dict) or not files or set(files) - FORMATS:
             fail(f"No verified attachments or unexpected format: {rel}")
             continue
-        expected_status = "FULL" if set(files) == FORMATS else "DEGRADED"
-        if data["status"] != expected_status:
-            fail(f"Invalid attachment status: {rel}")
+        if data["schema_version"] == 1:
+            if not set(files) <= LEGACY_FORMATS or data["status"] != ("FULL" if set(files) == LEGACY_FORMATS else "DEGRADED"):
+                fail(f"Invalid attachment status: {rel}")
+        else:
+            if not {"md", "json"} <= set(files) or data["status"] not in {"PUBLISHED", "DEGRADED"}:
+                fail(f"Invalid v2 primary files or report status: {rel}")
         for fmt, info in files.items():
             if not isinstance(info, dict) or set(info) != {"path", "bytes", "sha256"}:
                 fail(f"Bad file entry: {rel} / {fmt}")
                 continue
-            expected = (manifest.parent / f"report.{fmt}").resolve()
+            expected = (manifest.parent / ("data.json" if fmt == "json" else f"report.{fmt}")).resolve()
             path = info["path"]
             if not isinstance(path, str) or path != expected.relative_to(ROOT).as_posix():
                 fail(f"Noncanonical or broken href: {rel} / {fmt}")
@@ -101,6 +105,33 @@ def main() -> int:
             raw = expected.read_bytes()
             if not isinstance(info["bytes"], int) or info["bytes"] != len(raw) or info["sha256"] != hashlib.sha256(raw).hexdigest():
                 fail(f"Attachment bytes/hash mismatch: {path}")
+            if fmt == "md":
+                try:
+                    text = raw.decode("utf-8")
+                    if len(text.strip()) < 120 or not text.lstrip().startswith("#"):
+                        fail(f"Invalid or empty Markdown report: {path}")
+                except UnicodeDecodeError:
+                    fail(f"Invalid UTF-8 Markdown: {path}")
+            if fmt == "json":
+                try:
+                    detail = json.loads(raw.decode("utf-8"))
+                    if not isinstance(detail, dict) or detail.get("schema_version") != 1 or detail.get("run_key") != run_key or detail.get("agent") != agent:
+                        fail(f"Invalid data.json identity/schema: {path}")
+                    else:
+                        for collection in ("signals", "indices", "sources"):
+                            if not isinstance(detail.get(collection), list):
+                                fail(f"Invalid data.json {collection}: {path}")
+                        if not isinstance(detail.get("quality"), dict):
+                            fail(f"Missing data.json quality: {path}")
+                        if not isinstance(detail.get("as_of"), str) or not re.fullmatch(r"20\d\d-\d\d-\d\dT\d\d:\d\d:\d\d[+]08:00", detail["as_of"]):
+                            fail(f"Invalid as_of timezone: {path}")
+                        for source in detail.get("sources", []):
+                            if not isinstance(source, dict) or not re.match(r"^https?://", str(source.get("url", ""))):
+                                fail(f"Invalid data.json source: {path}")
+                        if data["status"] == "PUBLISHED" and not detail.get("sources"):
+                            fail(f"PUBLISHED report lacks traceable sources: {path}")
+                except (UnicodeDecodeError, ValueError):
+                    fail(f"Invalid JSON research data: {path}")
             if fmt == "pdf" and (not raw.startswith(b"%PDF-") or b"%%EOF" not in raw[-2048:]):
                 fail(f"Invalid PDF signature/end: {path}")
             if fmt in ("docx", "pptx"):
