@@ -43,7 +43,7 @@ jobs:
       - name: Check dashboard and verifier syntax
         run: |
           node --check assets/dashboard.js
-          python3 -m py_compile scripts/verify_pages.py
+          python3 -m py_compile scripts/verify_pages.py scripts/verify_dashboard_browser.py
       - name: Reject stale indexes and broken report archives
         run: |
           python3 scripts/build_catalog.py --check
@@ -68,3 +68,12 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
         run: |
           python3 scripts/verify_pages.py --site-url "${{ steps.deployment.outputs.page_url }}" --attempts 15 --interval 8
+      - name: Verify browser-rendered report and capture screenshot
+        run: |
+          python3 scripts/verify_dashboard_browser.py --site-url "${{ steps.deployment.outputs.page_url }}" --screenshot "$RUNNER_TEMP/cron-news-dashboard.png"
+      - name: Upload visual QA screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: pages-rendered-dashboard
+          path: ${{ runner.temp }}/cron-news-dashboard.png
+          retention-days: 7
