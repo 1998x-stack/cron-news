@@ -110,7 +110,8 @@ cron-news/
 ├── scripts/
 │   ├── build_catalog.py          # 所有合法 manifest → catalog.json
 │   ├── audit.py                  # 全库路径/内容/哈希完整性
-│   └── publish_bundle.py         # 本地 Git 授权上传可验证 ZIP
+│   ├── publish_bundle.py         # 本地 Git 授权上传可验证 ZIP
+│   └── verify_pages.py           # HTTP 校验部署后网页/JSON/报告字节
 ├── tests/
 ├── index.html
 ├── catalog.json
