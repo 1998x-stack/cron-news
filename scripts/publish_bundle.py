@@ -83,7 +83,7 @@ def load_bundle(bundle: Path) -> tuple[dict, dict[str, bytes]]:
                 raise ValueError("Invalid data.json identity: " + name)
             if not all(isinstance(detail.get(k), list) for k in ("signals", "indices", "sources")) or not isinstance(detail.get("quality"), dict):
                 raise ValueError("Missing research data lists/quality: " + name)
-            if not re.fullmatch(r"20\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d[+]08:00", str(detail.get("as_of", ""))):
+            if not re.fullmatch(r"20\d\d-\d\d-\d\dT\d\d:\d\d:\d\d[+]08:00", str(detail.get("as_of", ""))):
                 raise ValueError("Invalid as_of timestamp: " + name)
             if manifest["status"] == "PUBLISHED" and not detail["sources"]:
                 raise ValueError("No sources for published report: " + name)
