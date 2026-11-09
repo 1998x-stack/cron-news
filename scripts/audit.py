@@ -123,7 +123,7 @@ def main() -> int:
                                 fail(f"Invalid data.json {collection}: {path}")
                         if not isinstance(detail.get("quality"), dict):
                             fail(f"Missing data.json quality: {path}")
-                        if not isinstance(detail.get("as_of"), str) or not re.fullmatch(r"20\\d\\d-\\d\\d-\\d\\dT\\d\\d:\\d\\d:\\d\\d[+]08:00", detail["as_of"]):
+                        if not isinstance(detail.get("as_of"), str) or not re.fullmatch(r"20\d\d-\d\d-\d\dT\d\d:\d\d:\d\d[+]08:00", detail["as_of"]):
                             fail(f"Invalid as_of timezone: {path}")
                         for source in detail.get("sources", []):
                             if not isinstance(source, dict) or not re.match(r"^https?://", str(source.get("url", ""))):
