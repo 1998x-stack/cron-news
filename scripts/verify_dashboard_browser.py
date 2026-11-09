@@ -33,6 +33,14 @@ def main() -> int:
         print("BROWSER_UNVERIFIED: no supported Chrome/Chromium binary on runner", file=sys.stderr)
         return 1
 
+    if shutil.which("fc-list") is None:
+        print("BROWSER_UNVERIFIED: fontconfig unavailable", file=sys.stderr)
+        return 1
+    fonts = subprocess.run(["fc-list", ":lang=zh", "family"], capture_output=True, text=True, timeout=15)
+    if fonts.returncode != 0 or not fonts.stdout.strip():
+        print("BROWSER_UNVERIFIED: no CJK font found; screenshot would contain tofu", file=sys.stderr)
+        return 1
+
     catalog = json.loads((ROOT / "catalog.json").read_text(encoding="utf-8"))
     if not catalog["reports"]:
         print("BROWSER_VERIFIED: empty archive state, no report card expected")
@@ -43,7 +51,7 @@ def main() -> int:
     common = [
         browser, "--headless=new", "--no-sandbox", "--disable-gpu",
         "--disable-dev-shm-usage", "--hide-scrollbars",
-        "--window-size=1440,1080", "--virtual-time-budget=18000",
+        "--window-size=1440,3400", "--virtual-time-budget=18000",
     ]
     dom = subprocess.run(
         [*common, "--dump-dom", url], check=False, capture_output=True,
