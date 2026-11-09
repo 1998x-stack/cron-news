@@ -1,4 +1,19 @@
 {
   "schema_version": 2,
-  "reports": []
+  "reports": [
+    {
+      "run_key": "MARKET-2026-11-09-MANUAL-2327",
+      "agent": "market",
+      "date": "2026-11-09",
+      "scheduled_time": "23:27",
+      "title": "新闻联播 × A股综合研究日报｜2026-11-09｜手动端到端验收",
+      "summary": "核验11月7—9日新闻联播与11月9日A股收盘，区分收盘前信息和晚间新增政策，提供三项信号及反证。",
+      "status": "PUBLISHED",
+      "schema_version": 2,
+      "files": {
+        "md": "reports/market/2026/11/09/MARKET-2026-11-09-MANUAL-2327/report.md",
+        "json": "reports/market/2026/11/09/MARKET-2026-11-09-MANUAL-2327/data.json"
+      }
+    }
+  ]
 }

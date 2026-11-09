@@ -40,8 +40,10 @@ jobs:
           python-version: '3.12'
       - name: Archive-entropy regression tests
         run: python3 -m unittest discover -s tests -v
-      - name: Check dashboard JavaScript syntax
-        run: node --check assets/dashboard.js
+      - name: Check dashboard and verifier syntax
+        run: |
+          node --check assets/dashboard.js
+          python3 -m py_compile scripts/verify_pages.py
       - name: Reject stale indexes and broken report archives
         run: |
           python3 scripts/build_catalog.py --check
@@ -61,3 +63,8 @@ jobs:
       - name: Deploy Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Smoke-test real public website and report SHA-256
+        env:
+          GITHUB_SHA: ${{ github.sha }}
+        run: |
+          python3 scripts/verify_pages.py --site-url "${{ steps.deployment.outputs.page_url }}" --attempts 15 --interval 8
