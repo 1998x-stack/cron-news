@@ -4,7 +4,7 @@
 
 | 任务 | Prompt | 触发时间（北京时间） | 运行标识 |
 | --- | --- | --- | --- |
-| 每日市场与新闻联播简报 | [market.md](market.md) | 每天 08:00 / 12:00 / 20:00 | `MARKET-YYYY-MM-DD-HHMM` |
+| 每日市场与新闻联播简报 | [market.md](market.md) | 每天 08:00 / 12:00 / 20:00 / **20:30 新闻联播专项** | `MARKET-YYYY-MM-DD-HHMM` |
 | 每日科技与论文情报 | [tech.md](tech.md) | 每天 08:00 | `TECH-YYYY-MM-DD-0800` |
 | 中国研究媒体情报 | [china.md](china.md) | 每天 08:00 / 20:00 | `CHINA-YYYY-MM-DD-HHMM` |
 
@@ -19,3 +19,7 @@
 ## 版本变更
 
 修改本目录时，应同时检查 `AGENTS.md`、根目录 `README.md`、现有 ChatGPT 定时任务 Prompt 及测试/工作流是否同步；若修改调度，必须实际更新任务定时器，不得只改文档。严禁重新引入 Notion 归档环节；归档目标固定为 `reports/<agent>/YYYY/MM/DD/<RUN_KEY>/`。
+
+## 20:30 专项归档与可视化
+
+新增独立 `MARKET-YYYY-MM-DD-2030`，仍在 MARKET 分类，不覆盖原 20:00 收盘版。专项研究见 [market.md](market.md) 第 8 节。新记录使用 v2 `report.md` / `data.json` / `manifest.json`，可选 PDF/Office。GitHub Pages 不负责调度研究任务，而在主分支提交通过审计的材料后构建静态站点。
