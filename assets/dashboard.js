@@ -61,4 +61,4 @@ async function openReport(r){
 }
 $('close-detail').addEventListener('click',()=>$('detail').hidden=true);
 for(const id of ['agent','date','query'])$(id).addEventListener('input',render);
-fetch('catalog.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{if(![1,2].includes(x.schema_version)||!Array.isArray(x.reports))throw Error('catalog 版本不支持');catalog=x.reports;stats();render()}).catch(e=>{$('count').textContent='目录读取失败';appendText('items','无法读取 catalog.json：'+e.message);$('last-updated').textContent='目录不可用'});
+fetch('catalog.json',{cache:'no-store'}).then(r=>{if(!r.ok)throw Error('HTTP '+r.status);return r.json()}).then(x=>{if(![1,2].includes(x.schema_version)||!Array.isArray(x.reports))throw Error('catalog 版本不支持');catalog=x.reports;stats();render();const requested=new URLSearchParams(window.location.search).get('report');if(requested){const item=catalog.find(v=>v.run_key===requested);if(item)openReport(item)}}).catch(e=>{$('count').textContent='目录读取失败';appendText('items','无法读取 catalog.json：'+e.message);$('last-updated').textContent='目录不可用'});
