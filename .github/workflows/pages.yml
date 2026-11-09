@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'index.html'
+      - 'assets/**'
       - 'catalog.json'
       - 'README.md'
       - 'AGENTS.md'
@@ -39,6 +40,8 @@ jobs:
           python-version: '3.12'
       - name: Archive-entropy regression tests
         run: python3 -m unittest discover -s tests -v
+      - name: Check dashboard JavaScript syntax
+        run: node --check assets/dashboard.js
       - name: Reject stale indexes and broken report archives
         run: |
           python3 scripts/build_catalog.py --check
@@ -47,6 +50,7 @@ jobs:
         run: |
           mkdir -p _site
           cp index.html catalog.json README.md AGENTS.md .nojekyll _site/
+          cp -R assets _site/assets
           cp -R reports _site/reports
       - name: Configure Pages
         uses: actions/configure-pages@v5
