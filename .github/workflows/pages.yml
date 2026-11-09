@@ -68,6 +68,12 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
         run: |
           python3 scripts/verify_pages.py --site-url "${{ steps.deployment.outputs.page_url }}" --attempts 15 --interval 8
+      - name: Ensure real CJK fonts for visual QA
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq fonts-noto-cjk
+          fc-cache -f
+          fc-match 'Noto Sans CJK SC'
       - name: Verify browser-rendered report and capture screenshot
         run: |
           python3 scripts/verify_dashboard_browser.py --site-url "${{ steps.deployment.outputs.page_url }}" --screenshot "$RUNNER_TEMP/cron-news-dashboard.png"
