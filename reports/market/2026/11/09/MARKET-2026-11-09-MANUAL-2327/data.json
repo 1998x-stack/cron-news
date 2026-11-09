@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "run_key": "MARKET-2026-11-09-MANUAL-2327",
+  "agent": "market",
+  "as_of": "2026-11-09T23:32:23+08:00",
+  "market_date": "2026-11-09",
+  "report_type": "news_lianbo_a_share",
+  "execution_mode": "manual",
+  "bulletins": [
+    {
+      "date": "2026-11-09",
+      "official_item_count": 12,
+      "official_url": "https://tv.cctv.com/2026/11/09/VIDEQ0mkWi6i6bI1xvc5jp1x261109.shtml",
+      "third_party_transcript_url": "https://cn.govopendata.com/xinwenlianbo/20261109/",
+      "duration_seconds": null,
+      "duration_status": "UNVERIFIED"
+    },
+    {
+      "date": "2026-11-08",
+      "official_item_count": 11,
+      "official_url": "https://tv.cctv.com/2026/11/08/VIDEfXFofgrZk0VprwOqZ5wL261108.shtml",
+      "third_party_transcript_url": "https://cn.govopendata.com/xinwenlianbo/20261108/",
+      "duration_seconds": null,
+      "duration_status": "UNVERIFIED"
+    },
+    {
+      "date": "2026-11-07",
+      "official_item_count": 14,
+      "official_url": "https://tv.cctv.com/2026/11/07/VIDEa5vVaY2jFiDLnwkpYyy4261107.shtml",
+      "third_party_transcript_url": "https://cn.govopendata.com/xinwenlianbo/20261107/",
+      "duration_seconds": null,
+      "duration_status": "UNVERIFIED"
+    }
+  ],
+  "signals": [
+    {
+      "title": "中医药传统知识保护条例",
+      "score": 5.9,
+      "communication_score": 8.4,
+      "confidence": "MEDIUM",
+      "importance": "HIGH",
+      "summary": "第3条；2027-01-01施行。11/09 17:00公布晚于A股收盘，行业订单及公司盈利弹性未核验。",
+      "first_public_at": "2026-11-09T17:00:00+08:00",
+      "timing_relation": "POST_CLOSE",
+      "price_in": "UNKNOWN",
+      "sectors": [
+        "中医药知识产权与传统知识保护"
+      ],
+      "counterevidence": "保护性法规不等于确定新增采购或可证明的A股企业利润增量",
+      "sources": [
+        "https://tv.cctv.com/2026/11/09/VIDEQ0mkWi6i6bI1xvc5jp1x261109.shtml",
+        "https://big5.www.gov.cn/gate/big5/www.gov.cn/zhengce/content/202611/content_7085591.htm"
+      ]
+    },
+    {
+      "title": "低轨卫星互联网组网与发射",
+      "score": 6.1,
+      "communication_score": 6.8,
+      "confidence": "MEDIUM",
+      "importance": "HIGH",
+      "summary": "第7条；29组卫星发射，11/09 06:06已由新华社公开，非19:00播报导致当天市场上涨。",
+      "first_public_at": "2026-11-09T06:06:34+08:00",
+      "timing_relation": "PRE_CLOSE",
+      "price_in": "UNKNOWN",
+      "sectors": [
+        "卫星互联网",
+        "商业航天"
+      ],
+      "counterevidence": "卫星任务与具体上市公司合同及利润率未核实，其他商业航天催化并存",
+      "sources": [
+        "https://wap.miit.gov.cn/xwfb/gxdt/sjdt/art/2026/art_1f66f736c54b4b8cb31c123429f7ffb9.html",
+        "https://www.xinhuanet.com/20261109/c59381337ab24106a800be4d3baac43f/c.html"
+      ]
+    },
+    {
+      "title": "10月居民与工业生产者价格",
+      "score": 4.5,
+      "communication_score": 5.9,
+      "confidence": "MEDIUM",
+      "importance": "MEDIUM",
+      "summary": "第6条；CPI同比0.7%、PPI同比5.7%。9:30已公开，上下游盈利传导可能相反。",
+      "first_public_at": "2026-11-09T09:30:00+08:00",
+      "timing_relation": "PRE_CLOSE",
+      "price_in": "UNKNOWN",
+      "sectors": [
+        "上游原材料",
+        "下游制造"
+      ],
+      "counterevidence": "价格上涨未必来自终端需求复苏，下游可能面临成本压力",
+      "sources": [
+        "https://www.stats.gov.cn/zwfwck/sjfb/202611/t20261109_1965795.html",
+        "https://www.stats.gov.cn/sj/sjjd/202611/t20261109_1965796.html"
+      ]
+    }
+  ],
+  "indices": [
+    {
+      "name": "上证指数",
+      "code": "000001.SH",
+      "value": 3660.79,
+      "change_pct": 0.32,
+      "as_of": "2026-11-09T15:00:00+08:00",
+      "source_url": "https://stock.10jqka.com.cn/20261109/c681606490.shtml",
+      "unit": "点"
+    },
+    {
+      "name": "深证成指",
+      "code": "399001.SZ",
+      "value": 11145.49,
+      "change_pct": -0.27,
+      "as_of": "2026-11-09T15:00:00+08:00",
+      "source_url": "https://stock.10jqka.com.cn/20261109/c681606490.shtml",
+      "unit": "点"
+    },
+    {
+      "name": "创业板指",
+      "code": "399006.SZ",
+      "value": 2458.56,
+      "change_pct": -0.27,
+      "as_of": "2026-11-09T15:00:00+08:00",
+      "source_url": "https://stock.10jqka.com.cn/20261109/c681606490.shtml",
+      "unit": "点"
+    },
+    {
+      "name": "沪深300",
+      "code": "000300.SH",
+      "value": 4056.11,
+      "change_pct": 0.05,
+      "as_of": "2026-11-09T15:00:00+08:00",
+      "source_url": "https://flash.jin10.com/detail/20261109150308489800",
+      "unit": "点"
+    },
+    {
+      "name": "科创50",
+      "code": "000688.SH",
+      "value": 1256.96,
+      "change_pct": 0.3,
+      "as_of": "2026-11-09T15:00:00+08:00",
+      "source_url": "https://flash.jin10.com/detail/20261109150308489800",
+      "unit": "点"
+    }
+  ],
+  "market": {
+    "venue_scope": "沪深两市；统计家数/涨跌停遵循所引第三方全市场口径",
+    "turnover_cny_100m": 14826,
+    "turnover_delta_cny_100m": -1752,
+    "advancers": 2242,
+    "decliners": 3148,
+    "unchanged": 189,
+    "limit_up": 58,
+    "limit_down": 2,
+    "market_source_url": "https://stock.10jqka.com.cn/20261109/c681606490.shtml",
+    "northbound_net_buy_cny": null,
+    "margin_balance_cny": null,
+    "dragon_tiger_full_seats": null
+  },
+  "sources": [
+    {
+      "title": "CCTV 新闻联播 2026-11-09",
+      "url": "https://tv.cctv.com/2026/11/09/VIDEQ0mkWi6i6bI1xvc5jp1x261109.shtml"
+    },
+    {
+      "title": "CCTV 新闻联播 2026-11-08",
+      "url": "https://tv.cctv.com/2026/11/08/VIDEfXFofgrZk0VprwOqZ5wL261108.shtml"
+    },
+    {
+      "title": "CCTV 新闻联播 2026-11-07",
+      "url": "https://tv.cctv.com/2026/11/07/VIDEa5vVaY2jFiDLnwkpYyy4261107.shtml"
+    },
+    {
+      "title": "国务院令第850号：中医药传统知识保护条例",
+      "url": "https://big5.www.gov.cn/gate/big5/www.gov.cn/zhengce/content/202611/content_7085591.htm"
+    },
+    {
+      "title": "工信部：低轨卫星互联网29组卫星",
+      "url": "https://wap.miit.gov.cn/xwfb/gxdt/sjdt/art/2026/art_1f66f736c54b4b8cb31c123429f7ffb9.html"
+    },
+    {
+      "title": "新华网：卫星互联网低轨发射",
+      "url": "https://www.xinhuanet.com/20261109/c59381337ab24106a800be4d3baac43f/c.html"
+    },
+    {
+      "title": "国家统计局：10月份居民消费价格",
+      "url": "https://www.stats.gov.cn/zwfwck/sjfb/202611/t20261109_1965795.html"
+    },
+    {
+      "title": "国家统计局：CPI与PPI解读",
+      "url": "https://www.stats.gov.cn/sj/sjjd/202611/t20261109_1965796.html"
+    },
+    {
+      "title": "同花顺转载：11月9日收盘总结",
+      "url": "https://stock.10jqka.com.cn/20261109/c681606490.shtml"
+    },
+    {
+      "title": "东方财富Choice 11月9日收盘",
+      "url": "https://fund.eastmoney.com/a/202611093926213181.html"
+    }
+  ],
+  "quality": {
+    "status": "PARTIAL",
+    "evidence_level": "MEDIUM",
+    "official_broadcast_summary_verified": true,
+    "independent_video_timestamps_verified": false,
+    "source_quality": "官方节目提要及政府、统计和行业机关交叉验证；行情部分使用第三方收评",
+    "gaps": [
+      "完整视频节目逐条时长与总时长未核实",
+      "交易所全市场广度、涨跌停统计原始底表未取得",
+      "北向资金净买入不使用不可比口径",
+      "融资融券余额与龙虎榜完整席位未核验",
+      "上市公司财务暴露、五日/二十日行业超额收益未核验",
+      "GitHub、Pages、Gmail发布状态不写入公共研究正文"
+    ]
+  }
+}
