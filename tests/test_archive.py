@@ -146,9 +146,9 @@ class ArchiveTests(unittest.TestCase):
         key = "MARKET-2026-09-21-2030"
         directory = self.root / "reports" / "market" / "2026" / "09" / "21" / key
         directory.mkdir(parents=True, exist_ok=True)
-        narrative = "# 市场及新闻联播研究日报\\n\\n" + (
-            "本报告用于校验归档格式与实际来源，所有内容均为测试合成材料，不包含真实市场观点。\\n"
-            "测试版本只核对可追溯来源、文件字节、哈希与结构化元数据，不构建虚假收益预测。\\n" * 3
+        narrative = "# 市场及新闻联播研究日报\n\n" + (
+            "本报告用于校验归档格式与实际来源，所有内容均为测试合成材料，不包含真实市场观点。\n"
+            "测试版本只核对可追溯来源、文件字节、哈希与结构化元数据，不构建虚假收益预测。\n" * 3
         )
         detail = {
             "schema_version": 1,
@@ -160,7 +160,7 @@ class ArchiveTests(unittest.TestCase):
             "quality": {"status": "PARTIAL", "gaps": ["synthetic test only"]},
         }
         payload = {"md": narrative.encode("utf-8"),
-                   "json": (json.dumps(detail, ensure_ascii=False, indent=2) + "\\n").encode("utf-8")}
+                   "json": (json.dumps(detail, ensure_ascii=False, indent=2) + "\n").encode("utf-8")}
         filenames = {"md": "report.md", "json": "data.json"}
         files = {}
         for fmt, raw in payload.items():
