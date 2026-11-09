@@ -68,8 +68,8 @@ The browser draws charts only for numeric (not null) observations; no interpolat
 
 1. Fetch latest main and complete report tree; check run-key collision and public safety.
 2. Generate frozen `report.md`, `data.json`, compute true SHA-256/byte lengths and emit the manifest.
-3. Build `catalog.json` from **all** manifests with `scripts/build_catalog.py`, then run `--check`, `scripts/audit.py`, and repository unit tests on the complete prospective tree.
-4. Commit all new artifacts + deterministic catalog in one fast-forward transaction; rebuild on concurrent-main movement. No force push and no individual manifest-only writes.
+3. Build `catalog.json` from **all** manifests. Validate via either complete local checkout checks (`--check`, `scripts/audit.py`, unit tests) before a direct push, or through a staging PR whose `Archive integrity` CI verifies the complete merged tree before merge.
+4. Stage all new artifacts + deterministic catalog in one coherent branch/transaction. For PR-based delivery, merge only when checks on the latest head are green and main has not invalidated them; rebuild on concurrent-main movement. No force push and no individual manifest-only writes.
 5. GitHub Actions `.github/workflows/pages.yml` on main push audits then deploys. Verify deployment run SHA and public URLs separately; allow `PAGES_PENDING` when not yet propagated.
 6. If authentication, audit, real report content, URL source provenance, or commit verification is missing, record `ARCHIVE_BLOCKED`; do not claim Pages publication. The ChatGPT schedule is independent of GitHub Actions.
 
