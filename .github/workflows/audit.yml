@@ -19,7 +19,7 @@ jobs:
       - name: Check dashboard and verifier syntax
         run: |
           node --check assets/dashboard.js
-          python3 -m py_compile scripts/verify_pages.py
+          python3 -m py_compile scripts/verify_pages.py scripts/verify_dashboard_browser.py
       - name: Validate full archive and Pages index
         run: |
           python3 scripts/build_catalog.py --check
