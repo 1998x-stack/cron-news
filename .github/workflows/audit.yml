@@ -16,8 +16,10 @@ jobs:
           python-version: '3.12'
       - name: Run archive-entropy regression tests
         run: python3 -m unittest discover -s tests -v
-      - name: Check dashboard JavaScript syntax
-        run: node --check assets/dashboard.js
+      - name: Check dashboard and verifier syntax
+        run: |
+          node --check assets/dashboard.js
+          python3 -m py_compile scripts/verify_pages.py
       - name: Validate full archive and Pages index
         run: |
           python3 scripts/build_catalog.py --check
