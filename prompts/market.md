@@ -104,7 +104,7 @@ Step 6：每个 TOP 给至少一条可能推翻结论的强反证。讨论政策
   "schema_version": 1,
   "run_key": "MARKET-YYYY-MM-DD-2030",
   "agent": "market",
-  "as_of": "YYYY-MM-DDT20:30:00+08:00",
+  "as_of": "YYYY-MM-DDTHH:MM:SS+08:00",
   "market_date": "YYYY-MM-DD or null",
   "signals": [
     {"title": "政策信号", "score": null, "confidence": "LOW", "summary": "简述", "sources": ["https://..."]}
@@ -125,8 +125,8 @@ Step 6：每个 TOP 给至少一条可能推翻结论的强反证。讨论政策
 ### 8.7 必须真实执行的 GitHub → Pages 发布闭环
 
 1. 从最新 `main` 完整检查所有历史报告、manifest 与 catalog，确认 RUN_KEY 不重复。冻结 Markdown/JSON/可选附件，做公开安全扫描、URL核验、JSON解析、字节/哈希/格式校验。
-2. 在可执行完整 Python 仓库检查的授权环境运行：`python3 scripts/build_catalog.py`、`python3 scripts/build_catalog.py --check`、`python3 scripts/audit.py`、`python3 -m unittest discover -s tests -v`，再提交。若无完整检验环境/无法确证全树，不冒险单独手工修改 `catalog.json`。
-3. 优先采用完整 Git checkout + `scripts/publish_bundle.py`（授权 Git 凭据）一次性发布；或 GitHub Git Data API 在正确的最新 base tree 上 create blobs/tree/commit，严格防并发覆盖，必要时重新拉取 main 重建全量 catalog 再审计。可使用 GitHub text APIs 写真实文本，但**必须同一次原子提交包含运行文件 + 由全历史生成的 catalog**，且不能忽略全库校验。禁止 force push。
+2. 完整检验有两条合法路径：A) 使用完整的授权 Git checkout，生成全量 `catalog.json`，运行 `build_catalog.py --check`、`audit.py`、`unittest` 通过后再直推；B) 若无法执行本地 Python 全树检验，通过 GitHub API 读取最新 main 所有历史 manifest，在新分支创建本次全部文件及确定性全量 catalog，发起 PR，等待 `Archive integrity` CI 在完整合并树上成功后才准合并到 main。没有任一完整审计路径则停止发布。
+3. A 路线可用完整 Git checkout + `scripts/publish_bundle.py` 直接发布；B 路线须以 `archive/market-YYYY-MM-DD-2030` 命名分支，经 GitHub Git Data API `create_blob/create_tree/create_commit/update_ref` 或经 GitHub file APIs 写入真实内容，再创建 PR。不得只改 manifest、漏掉历史 catalog 或在缺少校验结果时合并。任何主分支并发移动都须重新计算全量 catalog、更新 PR、重新等待 CI；严禁 force push。合并后核对 main SHA 和新档案实际文件，PR 创建成功不是发布成功。
 4. main 真实提交成功后，`.github/workflows/pages.yml` 通过 push 自动触发部署；不要宣称“发送了 workflow_dispatch”就代表发布成功。确认 Actions run 的目标 SHA、audit 成功与 deploy 状态，随后核验 `https://1998x-stack.github.io/cron-news/` 和实际报告 JSON/Markdown 链接。若页面延迟，写 `PAGES_PENDING`，不可虚构成功。
 5. 本专项默认不发 Gmail；不读取或继承同仓库其他定时任务的私有收件人。每次在 ChatGPT 结果中报告 `RUN_KEY`、检索范围、数据缺失、文件及 SHA-256、GitHub commit URL、全库审计、Pages run URL/状态与公开网页链接；状态拆成 `RESEARCH_VERIFIED`、`ARCHIVE_BLOCKED|GITHUB_VERIFIED`、`PAGES_PENDING|PAGES_VERIFIED|PAGES_FAILED`。没有真实工具证据便使用 `UNVERIFIED`。
 
@@ -135,6 +135,6 @@ Step 6：每个 TOP 给至少一条可能推翻结论的强反证。讨论政策
 - **不准伪造**：节目稿件完整性、单条时长、新闻镜头、收盘价、北向净流入、公告、企业业务、URL、文档附件、GitHub提交SHA、Actions运行与Pages成功状态。
 - **不准时间倒置**：晚间消息与15:00收盘行情分离；未经核验的事件首次公开时间一律 `UNKNOWN`。
 - **不准以编排预测收益**：官方报道政治传播权重不等于投资因果强度。
-- **不准未检验便发布**：不能验证完整仓库则如实报告阻塞；不能以添加只含 manifest 的空文件蒙混过关。
+- **不准未检验便发布**：须完成本地完整审计或 PR 全库 CI 成功后才允许 main 合并；CI pending/失败、只提交 manifest 或未知状态都不算已归档。
 - **不准删除历史**：新归档必须 preserving 既有 MARKET/TECH/CHINA；同 RUN_KEY 幂等；出现并发更新须重新检索审核后重试。
 - **最终评判**：只有“真实研究文件已归档且可以取回 + 全库索引/审计通过 + Pages 真实可访问”才可称网页发布完成。任务定时触发本身只是开始，不是成功。
