@@ -4,12 +4,13 @@ const names={market:'市场与新闻联播',tech:'AI 与技术',china:'中国研
 const pathRule=/^reports\/(market|tech|china)\/20\d{2}\/\d{2}\/\d{2}\/(MARKET|TECH|CHINA)-20\d{2}-\d{2}-\d{2}-(?:\d{4}|MANUAL-\d{4})\/(?:report\.(?:md|pdf|docx|pptx)|data\.json)$/;
 const fmtNames={md:'Markdown',json:'数据 JSON',pdf:'PDF',docx:'Word',pptx:'PPTX'};
 let catalog=[];
+const hasNumber=v=>v!==null&&v!==undefined&&v!==''&&Number.isFinite(Number(v));
 const safePath=(p,r)=>typeof p==='string'&&pathRule.test(p)&&p.startsWith('reports/'+r.agent+'/')&&p.includes('/'+r.run_key+'/');
 function el(tag,text,cl){const n=document.createElement(tag);if(text!==undefined)n.textContent=String(text);if(cl)n.className=cl;return n}
 function appendText(id,text){$(id).replaceChildren(el('div',text,'notice'))}
 function link(path,label){const a=el('a',label);a.href=new URL(path,document.baseURI).href;a.target='_blank';a.rel='noopener noreferrer';return a}
 function svgChart(target,entries,{valueKey='value',unit='',labelKey='name',allowNegative=false}={}){
- const area=$(target);area.replaceChildren();const data=entries.filter(r=>Number.isFinite(Number(r[valueKey]))).slice(-14);
+ const area=$(target);area.replaceChildren();const data=entries.filter(r=>hasNumber(r[valueKey])).slice(-14);
  if(!data.length){area.append(el('p','没有足够的可验证数值用于图表。','muted'));return}
  const w=740,h=174,pad=38,base=allowNegative?87:145,values=data.map(d=>Number(d[valueKey]));
  const largest=Math.max(1,...values.map(v=>Math.abs(v))),span=(w-pad*2)/data.length;
@@ -47,8 +48,8 @@ async function openReport(r){
  if(safePath(r.files?.json,r)){
  try{const res=await fetch(r.files.json,{cache:'no-store'});if(!res.ok)throw Error('HTTP '+res.status);const data=await res.json();if(data.schema_version!==1||data.run_key!==r.run_key)throw Error('数据标识不匹配');
  const signals=Array.isArray(data.signals)?data.signals:[];const indices=Array.isArray(data.indices)?data.indices:[];
- svgChart('signal-chart',signals.map(s=>({name:s.title,value:s.score})).filter(s=>Number.isFinite(Number(s.value))),{valueKey:'value'});
- svgChart('market-chart',indices.map(i=>({name:i.name,value:i.change_pct})).filter(i=>Number.isFinite(Number(i.value))),{allowNegative:true,unit:'%'});
+ svgChart('signal-chart',signals.map(s=>({name:s.title,value:s.score})).filter(s=>hasNumber(s.value)),{valueKey:'value'});
+ svgChart('market-chart',indices.map(i=>({name:i.name,value:i.change_pct})).filter(i=>hasNumber(i.value)),{allowNegative:true,unit:'%'});
  for(const s of signals){const row=el('div',undefined,'signal');row.append(el('strong',s.title||'未命名信号'),el('small',`评分 ${s.score??'未评'} · 置信度 ${s.confidence||'未定'}`),el('div',s.summary||''));$('signals').append(row)}
  if(!signals.length)$('signals').append(el('div','暂无可验证的结构化信号。','notice'));
  for(const m of indices){const row=el('div',undefined,'signal');row.append(el('strong',m.name||'指标'),el('small',`${m.value??'无数据'} · 涨跌 ${m.change_pct??'—'}% · ${m.as_of||''}`));$('indices').append(row)}
