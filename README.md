@@ -192,3 +192,5 @@ python3 scripts/publish_bundle.py /path/to/verified-run.zip
 ### Visual regression evidence｜可视化验收凭据
 
 每次 Pages 发布运行会从公网下载 `catalog.json` 和真实研究文件，之后使用 headless Chrome 打开 `?report=<RUN_KEY>` 深链接，确认报告卡片、正文与信号 SVG 图表已经进入**浏览器实际 DOM**。验证同时生成 `pages-rendered-dashboard` PNG 截图工件，保留 7 天，可在 [Pages Actions](https://github.com/1998x-stack/cron-news/actions/workflows/pages.yml) 对应运行的 Artifacts 中下载。此验证比仅检查 HTTP 200 更严格，但仍不能代替人工浏览器的可访问性审查。
+
+**Screenshot fidelity**：Pages 流水线会在 Chrome 截图前安装 `fonts-noto-cjk` 并验证系统具备中文字体；采用较高的浏览器视口以同时拍到报告卡片和图表，避免只截到首页标题。实际终端渲染仍取决于用户浏览器的可用字体。
