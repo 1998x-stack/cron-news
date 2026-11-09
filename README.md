@@ -75,7 +75,7 @@ flowchart TD
 - [阅读完整研究报告](reports/market/2026/11/09/MARKET-2026-11-09-MANUAL-2327/report.md)
 - [查看结构化数据](reports/market/2026/11/09/MARKET-2026-11-09-MANUAL-2327/data.json)
 - [核验 manifest](reports/market/2026/11/09/MARKET-2026-11-09-MANUAL-2327/manifest.json)
-- [打开网页图表与报告详情](https://1998x-stack.github.io/cron-news/)
+- [直接打开这份日报的网页详情](https://1998x-stack.github.io/cron-news/?report=MARKET-2026-11-09-MANUAL-2327)
 
 > 此处的研究是有来源的实际交易日验收，不是伪造的示例行情。**最终是否完成公开网页部署，以对应 GitHub Pages 工作流与真实公网检验为准**。
 
@@ -111,7 +111,8 @@ cron-news/
 │   ├── build_catalog.py          # 所有合法 manifest → catalog.json
 │   ├── audit.py                  # 全库路径/内容/哈希完整性
 │   ├── publish_bundle.py         # 本地 Git 授权上传可验证 ZIP
-│   └── verify_pages.py           # HTTP 校验部署后网页/JSON/报告字节
+│   ├── verify_pages.py           # HTTP 校验部署后网页/JSON/报告字节
+│   └── verify_dashboard_browser.py # Chrome DOM + 真实页面截图
 ├── tests/
 ├── index.html
 ├── catalog.json
@@ -187,3 +188,7 @@ python3 scripts/publish_bundle.py /path/to/verified-run.zip
 ---
 
 <div align="center"><sub>Research integrity over appearance · Release evidence over status claims · Preserve history, never invent data.</sub></div>
+
+### Visual regression evidence｜可视化验收凭据
+
+每次 Pages 发布运行会从公网下载 `catalog.json` 和真实研究文件，之后使用 headless Chrome 打开 `?report=<RUN_KEY>` 深链接，确认报告卡片、正文与信号 SVG 图表已经进入**浏览器实际 DOM**。验证同时生成 `pages-rendered-dashboard` PNG 截图工件，保留 7 天，可在 [Pages Actions](https://github.com/1998x-stack/cron-news/actions/workflows/pages.yml) 对应运行的 Artifacts 中下载。此验证比仅检查 HTTP 200 更严格，但仍不能代替人工浏览器的可访问性审查。
