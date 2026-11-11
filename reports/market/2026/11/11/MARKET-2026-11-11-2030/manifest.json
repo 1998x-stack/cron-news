@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "run_key": "MARKET-2026-11-11-2030",
+  "agent": "market",
+  "date": "2026-11-11",
+  "scheduled_time": "20:30",
+  "title": "新闻联播 × A股综合研究日报｜2026-11-11",
+  "summary": "核验11月9—10日节目转载目录及11月11日部分A股行情；当晚节目原始目录缺失，候选信号保守标注。",
+  "status": "DEGRADED",
+  "files": {
+    "md": {
+      "path": "reports/market/2026/11/11/MARKET-2026-11-11-2030/report.md",
+      "bytes": 7811,
+      "sha256": "9299cac4359afbee2007481aca3f03ecce617222f755cf659740ec040d83d72a"
+    },
+    "json": {
+      "path": "reports/market/2026/11/11/MARKET-2026-11-11-2030/data.json",
+      "bytes": 2717,
+      "sha256": "2dc8654f2bf3d128f6ad57c9fcfdbec1556515da18cf86c077896e1800696a43"
+    }
+  }
+}

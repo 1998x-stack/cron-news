@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "run_key": "MARKET-2026-11-11-2030",
+  "agent": "market",
+  "as_of": "2026-11-11T20:30:22+08:00",
+  "market_date": "2026-11-11",
+  "signals": [
+    {
+      "title": "创新药临床使用流程",
+      "score": null,
+      "confidence": "低",
+      "summary": "11月10日节目快讯提及优化创新药进院流程；原始政策时间及公司受益未核，反证是采购未增加。",
+      "sources": [
+        "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-10"
+      ]
+    },
+    {
+      "title": "湾区科技协同",
+      "score": null,
+      "confidence": "低",
+      "summary": "11月10日节目报道既有科技协同举措；缺少新预算与订单证据。",
+      "sources": [
+        "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-10"
+      ]
+    },
+    {
+      "title": "低轨卫星互联网",
+      "score": null,
+      "confidence": "低",
+      "summary": "11月9日节目报道组网进度；无新增订单及利润证据。",
+      "sources": [
+        "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-09"
+      ]
+    }
+  ],
+  "indices": [
+    {
+      "name": "上证指数",
+      "value": 3680.64,
+      "change_pct": 0.46,
+      "as_of": "2026-11-11T15:00:00+08:00",
+      "source_url": "https://hk.finance.yahoo.com/quote/000001.SS/history/"
+    },
+    {
+      "name": "深证成指",
+      "value": null,
+      "change_pct": null,
+      "as_of": "2026-11-11T15:00:00+08:00",
+      "source_url": null
+    },
+    {
+      "name": "创业板指",
+      "value": null,
+      "change_pct": null,
+      "as_of": "2026-11-11T15:00:00+08:00",
+      "source_url": null
+    }
+  ],
+  "sources": [
+    {
+      "title": "11月9日节目目录（第三方转载）",
+      "url": "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-09"
+    },
+    {
+      "title": "11月10日节目目录（第三方转载）",
+      "url": "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-10"
+    },
+    {
+      "title": "11月11日上证指数历史行情",
+      "url": "https://hk.finance.yahoo.com/quote/000001.SS/history/"
+    },
+    {
+      "title": "11月11日涨跌停报道（央广财经转载）",
+      "url": "https://finance.eastmoney.com/a/202611113928468366.html"
+    },
+    {
+      "title": "11月11日成交额与广度初步统计",
+      "url": "https://agu-app.com/daily/2026-11-11"
+    }
+  ],
+  "quality": {
+    "status": "PARTIAL",
+    "gaps": [
+      "11月11日央视原始完整节目目录缺失",
+      "11月9—10日仅核验第三方转载",
+      "深证成指及创业板指可靠点位缺失",
+      "沪深成交额、市场广度仅初步第三方口径",
+      "政策原件、上市公司业务暴露、龙虎榜和融资融券未核"
+    ]
+  }
+}
