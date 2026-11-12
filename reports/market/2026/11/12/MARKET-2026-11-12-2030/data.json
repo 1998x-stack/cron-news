@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "run_key": "MARKET-2026-11-12-2030",
+  "agent": "market",
+  "as_of": "2026-11-12T20:29:16+08:00",
+  "market_date": "2026-11-12",
+  "signals": [
+    {
+      "title": "创新药进院流程",
+      "score": null,
+      "confidence": "低",
+      "summary": "11月10日转载分条提及四部门通知；首发时刻与盈利传导尚未核实。",
+      "sources": [
+        "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-10"
+      ]
+    },
+    {
+      "title": "人工智能+行动",
+      "score": null,
+      "confidence": "低",
+      "summary": "11月11日节目目录第6条；缺新增预算、企业公告及定价证据。",
+      "sources": [
+        "https://www.cuobiezi.net/news/cctv/xwlb/day/2026-11-11"
+      ]
+    }
+  ],
+  "indices": [
+    {
+      "name": "上证指数",
+      "value": 3655.83,
+      "change_pct": -0.67,
+      "as_of": "2026-11-12T15:00:00+08:00",
+      "source_url": "https://finance.eastmoney.com/a/202611123929452622.html"
+    },
+    {
+      "name": "深证成指",
+      "value": 11197.98,
+      "change_pct": -1.68,
+      "as_of": "2026-11-12T15:00:00+08:00",
+      "source_url": "https://finance.eastmoney.com/a/202611123929452622.html"
+    },
+    {
+      "name": "创业板指",
+      "value": 2509.43,
+      "change_pct": -2.44,
+      "as_of": "2026-11-12T15:00:00+08:00",
+      "source_url": "https://finance.eastmoney.com/a/202611123929452622.html"
+    },
+    {
+      "name": "科创50",
+      "value": 1309.84,
+      "change_pct": 0.73,
+      "as_of": "2026-11-12T15:00:00+08:00",
+      "source_url": "https://finance.eastmoney.com/a/202611123929452622.html"
+    }
+  ],
+  "sources": [
+    {
+      "title": "11月10日《新闻联播》转载分条",
+      "url": "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-10"
+    },
+    {
+      "title": "11月11日《新闻联播》转载分条",
+      "url": "https://www.cuobiezi.net/news/cctv/xwlb/day/2026-11-11"
+    },
+    {
+      "title": "21世纪经济报道11月12日收评",
+      "url": "https://finance.eastmoney.com/a/202611123929452622.html"
+    },
+    {
+      "title": "11月12日行情交叉核验",
+      "url": "https://m.cngold.org/stock/xw10876301.html"
+    },
+    {
+      "title": "上证指数历史价格",
+      "url": "https://hk.finance.yahoo.com/quote/000001.SS/history/"
+    }
+  ],
+  "quality": {
+    "status": "PARTIAL",
+    "gaps": [
+      "11月12日CCTV节目目录缺失",
+      "11月10—11日仅第三方节目转载未核实CCTV原始页",
+      "单条时长和镜头无法从文字稿验证",
+      "三日完整分类比例不可计算",
+      "沪深上涨下跌家数跨来源口径不一致",
+      "龙虎榜、融资融券及前日同口径成交变化未核实"
+    ]
+  }
+}

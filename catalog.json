@@ -2,6 +2,20 @@
   "schema_version": 2,
   "reports": [
     {
+      "run_key": "MARKET-2026-11-12-2030",
+      "agent": "market",
+      "date": "2026-11-12",
+      "scheduled_time": "20:30",
+      "title": "新闻联播 × A股综合研究日报｜2026-11-12",
+      "summary": "11月12日A股三大指数收跌，科创50逆势上涨；11月12日晚间节目目录未核验，11月10—11日候选信号保守分析。",
+      "status": "DEGRADED",
+      "schema_version": 2,
+      "files": {
+        "md": "reports/market/2026/11/12/MARKET-2026-11-12-2030/report.md",
+        "json": "reports/market/2026/11/12/MARKET-2026-11-12-2030/data.json"
+      }
+    },
+    {
       "run_key": "MARKET-2026-11-11-2030",
       "agent": "market",
       "date": "2026-11-11",
