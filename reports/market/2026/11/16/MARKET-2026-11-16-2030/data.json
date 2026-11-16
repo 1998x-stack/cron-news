@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "run_key": "MARKET-2026-11-16-2030",
+  "agent": "market",
+  "as_of": "2026-11-16T21:32:45+08:00",
+  "market_date": "2026-11-16",
+  "signals": [
+    {
+      "title": "2026版医保药品目录",
+      "score": 5.92,
+      "confidence": "低",
+      "summary": "传播6.67/10（覆盖60%），投资5.92/10（覆盖60%）；降价可能抵消销量增长；首次公开时刻不明。",
+      "sources": [
+        "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-14"
+      ]
+    },
+    {
+      "title": "APEC开放创新合作",
+      "score": 3.5,
+      "confidence": "低",
+      "summary": "传播6.73/10（覆盖75%），投资3.50/10（覆盖60%）；倡议缺少可验证企业订单。",
+      "sources": [
+        "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-14",
+        "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-15"
+      ]
+    }
+  ],
+  "indices": [
+    {
+      "name": "上证指数",
+      "value": 3602.57,
+      "change_pct": -0.87,
+      "as_of": "2026-11-16T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-16/c10883008.html"
+    },
+    {
+      "name": "深证成指",
+      "value": 10690.78,
+      "change_pct": -2.53,
+      "as_of": "2026-11-16T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-16/c10883008.html"
+    },
+    {
+      "name": "创业板指",
+      "value": 2320.02,
+      "change_pct": -4.37,
+      "as_of": "2026-11-16T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-16/c10883008.html"
+    },
+    {
+      "name": "科创50",
+      "value": 1213.68,
+      "change_pct": -5.16,
+      "as_of": "2026-11-16T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-16/c10883008.html"
+    },
+    {
+      "name": "沪深300",
+      "value": 3979.8,
+      "change_pct": -0.91,
+      "as_of": "2026-11-16T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-16/c10883008.html"
+    },
+    {
+      "name": "北证50",
+      "value": 836.57,
+      "change_pct": -4.54,
+      "as_of": "2026-11-16T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-16/c10883008.html"
+    }
+  ],
+  "sources": [
+    {
+      "title": "11月14日《新闻联播》转载目录及分条",
+      "url": "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-14"
+    },
+    {
+      "title": "11月15日《新闻联播》转载目录及分条",
+      "url": "https://cuobiezi.net/news/cctv/xwlb/day/2026-11-15"
+    },
+    {
+      "title": "11月16日A股收盘：澎湃新闻",
+      "url": "https://www.thepaper.cn/newsDetail_forward_34489957"
+    },
+    {
+      "title": "11月16日A股收盘：21世纪经济报道",
+      "url": "https://finance.eastmoney.com/a/202611163931763143.html"
+    },
+    {
+      "title": "11月16日A股收盘：智通财经",
+      "url": "https://cn.investing.com/news/stock-market-news/article-3669125"
+    },
+    {
+      "title": "央视《新闻联播》节目入口（当晚目录未核验）",
+      "url": "https://tv.cctv.com/lm/xwlb/"
+    },
+    {
+      "title": "A股主要指数明细",
+      "url": "https://stock.cngold.org/c/2026-11-16/c10883008.html"
+    }
+  ],
+  "quality": {
+    "status": "PARTIAL",
+    "gaps": [
+      "11月16日央视新闻联播完整目录与首发时间未核验",
+      "11月14—15日央视原始节目逐条页面未核验",
+      "节目总时长、镜头和单条时长无法从文字稿验证",
+      "行业精确TOP5、交易所龙虎榜及融资融券披露日缺失",
+      "市场广度不同数据商样本不一致",
+      "医保正式目录全文及上市公司暴露尚未核验"
+    ]
+  }
+}
