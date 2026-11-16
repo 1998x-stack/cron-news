@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "run_key": "MARKET-2026-11-16-2000",
+  "agent": "market",
+  "date": "2026-11-16",
+  "scheduled_time": "20:00",
+  "title": "每日市场与新闻联播简报｜2026-11-16 20:00",
+  "summary": "10月中国经济呈现工业与高技术制造较强、消费和投资偏弱；A股成长板块承压，港股指数分化；关注美债利率、油市供需、APEC深圳周及NVIDIA业绩窗口。",
+  "status": "DEGRADED",
+  "files": {
+    "md": {
+      "path": "reports/market/2026/11/16/MARKET-2026-11-16-2000/report.md",
+      "bytes": 21525,
+      "sha256": "1bc7341b08017f3310b74352cbc10bc1ff52b96a4c884e2556cab3cbb14305e8"
+    },
+    "json": {
+      "path": "reports/market/2026/11/16/MARKET-2026-11-16-2000/data.json",
+      "bytes": 9676,
+      "sha256": "8f3a0897c18c2f80c99eb55464870ea812d6de70a764eaab43a225cd3ef7ba5b"
+    }
+  }
+}
