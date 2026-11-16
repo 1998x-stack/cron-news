@@ -2,6 +2,20 @@
   "schema_version": 2,
   "reports": [
     {
+      "run_key": "MARKET-2026-11-16-2030",
+      "agent": "market",
+      "date": "2026-11-16",
+      "scheduled_time": "20:30",
+      "title": "新闻联播 × A股综合研究日报｜2026-11-16",
+      "summary": "11月16日成长指数大幅回撤，周末医保目录与APEC议题连续报道；当晚新闻联播目录未核验，审慎降级。",
+      "status": "DEGRADED",
+      "schema_version": 2,
+      "files": {
+        "md": "reports/market/2026/11/16/MARKET-2026-11-16-2030/report.md",
+        "json": "reports/market/2026/11/16/MARKET-2026-11-16-2030/data.json"
+      }
+    },
+    {
       "run_key": "MARKET-2026-11-16-2000",
       "agent": "market",
       "date": "2026-11-16",
