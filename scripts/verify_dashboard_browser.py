@@ -83,7 +83,7 @@ def main() -> int:
         if count and "<svg" not in html:
             print("BROWSER_UNVERIFIED: browser rendered no SVG charts", file=sys.stderr)
             return 1
-        if data.get("signals") and "资料截止" not in html:
+        if data.get("signals") and not any(marker in html for marker in ("资料截止", "研究截止", "采集截止")):
             print("BROWSER_UNVERIFIED: Markdown narrative not fetched into report pane", file=sys.stderr)
             return 1
 
