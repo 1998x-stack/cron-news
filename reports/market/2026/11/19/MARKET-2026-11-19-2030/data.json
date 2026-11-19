@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "run_key": "MARKET-2026-11-19-2030",
+  "agent": "market",
+  "as_of": "2026-11-19T20:33:44+08:00",
+  "market_date": "2026-11-19",
+  "signals": [
+    {
+      "title": "八省市6G创新发展部省协同试点",
+      "score": 4.53,
+      "confidence": "低",
+      "summary": "政策存在可核验，但预算、订单和上市公司盈利暴露未证实；传播5.58/10覆盖60%，投资4.53/10覆盖75%。",
+      "sources": [
+        "https://finance.eastmoney.com/a/202611183934279119.html",
+        "https://www.hebtv.com/0/0rmhlm/mt/nzhb/tw/12601649.shtml"
+      ]
+    },
+    {
+      "title": "APEC开放合作连续议题",
+      "score": 3,
+      "confidence": "低",
+      "summary": "传播6.87/10覆盖75%，投资3.00/10覆盖55%；倡议不等于新增订单。",
+      "sources": [
+        "https://wap.eastmoney.com/a/202611173933184526.html",
+        "https://finance.eastmoney.com/a/202611183934279119.html"
+      ]
+    }
+  ],
+  "indices": [
+    {
+      "name": "上证指数",
+      "value": 3577.62,
+      "change_pct": -0.28,
+      "as_of": "2026-11-19T15:00:00+08:00",
+      "source_url": "https://m.cngold.org/stock/xw10891073.html"
+    },
+    {
+      "name": "深证成指",
+      "value": 10583.2,
+      "change_pct": -0.71,
+      "as_of": "2026-11-19T15:00:00+08:00",
+      "source_url": "https://m.cngold.org/stock/xw10891073.html"
+    },
+    {
+      "name": "创业板指",
+      "value": 2293.34,
+      "change_pct": -0.79,
+      "as_of": "2026-11-19T15:00:00+08:00",
+      "source_url": "https://m.cngold.org/stock/xw10891073.html"
+    },
+    {
+      "name": "科创50",
+      "value": 1270.78,
+      "change_pct": 1.83,
+      "as_of": "2026-11-19T15:00:00+08:00",
+      "source_url": "https://m.cngold.org/stock/xw10891073.html"
+    },
+    {
+      "name": "沪深300",
+      "value": 3984.84,
+      "change_pct": 0.03,
+      "as_of": "2026-11-19T15:00:00+08:00",
+      "source_url": "https://m.cngold.org/stock/xw10891073.html"
+    },
+    {
+      "name": "北证50",
+      "value": 798.64,
+      "change_pct": -3.99,
+      "as_of": "2026-11-19T15:00:00+08:00",
+      "source_url": "https://m.cngold.org/stock/xw10891073.html"
+    }
+  ],
+  "sources": [
+    {
+      "title": "央视新闻客户端11月17日晚间要闻集锦（东方财富转载）",
+      "url": "https://wap.eastmoney.com/a/202611173933184526.html"
+    },
+    {
+      "title": "央视新闻客户端11月18日晚间要闻集锦（东方财富转载）",
+      "url": "https://finance.eastmoney.com/a/202611183934279119.html"
+    },
+    {
+      "title": "证券时报11月19日收盘涨跌停与市场广度",
+      "url": "https://finance.ifeng.com/c/8yBVwUkOgmq"
+    },
+    {
+      "title": "每日经济新闻11月19日收盘复盘",
+      "url": "https://www.nbd.com.cn/articles/2026-11-19/4652496.html"
+    },
+    {
+      "title": "11月19日指数收盘点位与成交额",
+      "url": "https://m.cngold.org/stock/xw10891073.html"
+    },
+    {
+      "title": "11月19日证券时报盘面复盘",
+      "url": "https://finance.ifeng.com/c/8yBNNfZ79yp"
+    },
+    {
+      "title": "河北广播电视台6G试点政策线索",
+      "url": "https://www.hebtv.com/0/0rmhlm/mt/nzhb/tw/12601649.shtml"
+    }
+  ],
+  "quality": {
+    "status": "DEGRADED",
+    "gaps": [
+      "11月19日新闻联播完整目录未核验",
+      "17—18日节目条目仅摘要/部分分条，无法可靠统计三日一级条目占比",
+      "节目视频时长、镜头、单条秒数无法从文字稿验证",
+      "行业TOP5、龙虎榜、融资融券及交易所原始行情页面未独立核验",
+      "市场涨跌家数包含ST，沪深京细分口径未独立拆分"
+    ]
+  }
+}

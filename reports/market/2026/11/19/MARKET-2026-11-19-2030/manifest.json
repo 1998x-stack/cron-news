@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "run_key": "MARKET-2026-11-19-2030",
+  "agent": "market",
+  "date": "2026-11-19",
+  "scheduled_time": "20:30",
+  "title": "新闻联播 × A股综合研究日报｜2026-11-19",
+  "summary": "11月19日沪深市场普跌、科创50逆势上涨；6G试点与APEC议题审慎观察，晚间新闻联播完整目录缺失。",
+  "status": "DEGRADED",
+  "files": {
+    "md": {
+      "path": "reports/market/2026/11/19/MARKET-2026-11-19-2030/report.md",
+      "bytes": 9791,
+      "sha256": "d662533eaa7a7f8349c24ab6315fe1777dc89988736c60eb7a15ae87ef46522e"
+    },
+    "json": {
+      "path": "reports/market/2026/11/19/MARKET-2026-11-19-2030/data.json",
+      "bytes": 3700,
+      "sha256": "52598dd209c86ac6dfcc42fd7f8aee3f7d2c81c37c1b41ffc014e86e708a8ac4"
+    }
+  }
+}
