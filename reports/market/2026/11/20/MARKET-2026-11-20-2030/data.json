@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "run_key": "MARKET-2026-11-20-2030",
+  "agent": "market",
+  "as_of": "2026-11-20T20:25:19+08:00",
+  "market_date": "2026-11-20",
+  "signals": [
+    {
+      "title": "领航级智能工厂",
+      "score": 4,
+      "confidence": "低",
+      "summary": "传播5.87/10、投资4/10，缺订单证据",
+      "sources": [
+        "https://finance.eastmoney.com/a/202611193935362239.html"
+      ]
+    },
+    {
+      "title": "老龄工作部署",
+      "score": 3.42,
+      "confidence": "低",
+      "summary": "传播6.55/10、投资3.42/10，缺预算与盈利证据",
+      "sources": [
+        "https://finance.eastmoney.com/a/202611193935362239.html"
+      ]
+    }
+  ],
+  "indices": [
+    {
+      "name": "上证指数",
+      "value": 3533.79,
+      "change_pct": -1.23,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261120/c682043117.shtml"
+    },
+    {
+      "name": "深证成指",
+      "value": 10256.39,
+      "change_pct": -3.09,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261120/c682043117.shtml"
+    },
+    {
+      "name": "创业板指",
+      "value": 2212.13,
+      "change_pct": -3.54,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261120/c682043117.shtml"
+    },
+    {
+      "name": "科创50",
+      "value": 1231.09,
+      "change_pct": -3.12,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261120/c682043117.shtml"
+    },
+    {
+      "name": "沪深300",
+      "value": 3954.57,
+      "change_pct": -0.76,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261120/c682043117.shtml"
+    },
+    {
+      "name": "北证50",
+      "value": 759.9,
+      "change_pct": -4.85,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261120/c682043117.shtml"
+    }
+  ],
+  "sources": [
+    {
+      "title": "11月18日节目摘要",
+      "url": "https://wap.eastmoney.com/a/202611183934279119.html"
+    },
+    {
+      "title": "11月19日节目摘要",
+      "url": "https://finance.eastmoney.com/a/202611193935362239.html"
+    },
+    {
+      "title": "中新经纬收盘",
+      "url": "https://cj.sina.com.cn/articles/view/5993531560/1653e08a802001qma0"
+    },
+    {
+      "title": "同花顺复盘",
+      "url": "https://news.10jqka.com.cn/20261120/c682043117.shtml"
+    },
+    {
+      "title": "每日经济新闻成交额",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-20/doc-inizkizc5583458.shtml"
+    }
+  ],
+  "quality": {
+    "status": "DEGRADED",
+    "gaps": [
+      "20日节目目录缺失",
+      "节目秒数无法核验",
+      "成交额统计口径不一致",
+      "龙虎榜两融和行业完整榜单缺失"
+    ]
+  }
+}
