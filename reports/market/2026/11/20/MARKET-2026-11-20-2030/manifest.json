@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "run_key": "MARKET-2026-11-20-2030",
+  "agent": "market",
+  "date": "2026-11-20",
+  "scheduled_time": "20:30",
+  "title": "新闻联播 × A股综合研究日报｜2026-11-20",
+  "summary": "11月20日A股广度313:5236，智能工厂及老龄工作政策审慎跟踪，晚间节目目录缺失。",
+  "status": "DEGRADED",
+  "files": {
+    "md": {
+      "path": "reports/market/2026/11/20/MARKET-2026-11-20-2030/report.md",
+      "bytes": 5486,
+      "sha256": "71b27f990e90212a107f9c4dedf77f9aaaa38728cf02a5e1ebd7734bb9e9e5a7"
+    },
+    "json": {
+      "path": "reports/market/2026/11/20/MARKET-2026-11-20-2030/data.json",
+      "bytes": 2865,
+      "sha256": "6106e6fd0a9e7c897573a03f5384e8508f2ba5ae0d18cf8ad3ec999463024a3d"
+    }
+  }
+}
