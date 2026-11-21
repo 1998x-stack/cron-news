@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "run_key": "MARKET-2026-11-21-2030",
+  "agent": "market",
+  "date": "2026-11-21",
+  "scheduled_time": "20:30",
+  "title": "新闻联播 × A股综合研究日报｜2026-11-21",
+  "summary": "周六非交易日，复盘11月20日沪深普跌；三日新闻联播完整节目目录缺失，TOP0，审慎降级。",
+  "status": "DEGRADED",
+  "files": {
+    "md": {
+      "path": "reports/market/2026/11/21/MARKET-2026-11-21-2030/report.md",
+      "bytes": 7836,
+      "sha256": "1952d15cbedde8e3d6cfc6d9fffee855947c86bcdff94008ada88f1a767a7785"
+    },
+    "json": {
+      "path": "reports/market/2026/11/21/MARKET-2026-11-21-2030/data.json",
+      "bytes": 2708,
+      "sha256": "961e0e8f142a35d083899ace103d1ae26030de67cfa59c70660853235cedee3a"
+    }
+  }
+}
