@@ -1,0 +1,133 @@
+{
+  "schema_version": 1,
+  "run_key": "MARKET-2026-11-22-2030",
+  "agent": "market",
+  "as_of": "2026-11-22T20:28:49+08:00",
+  "market_date": "2026-11-20",
+  "signals": [],
+  "indices": [
+    {
+      "name": "上证指数",
+      "value": 3533.79,
+      "change_pct": -1.23,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-20/c10893781.html"
+    },
+    {
+      "name": "深证成指",
+      "value": 10256.39,
+      "change_pct": -3.09,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-20/c10893781.html"
+    },
+    {
+      "name": "创业板指",
+      "value": 2212.13,
+      "change_pct": -3.54,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-20/c10893781.html"
+    },
+    {
+      "name": "科创50",
+      "value": 1231.09,
+      "change_pct": -3.12,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-20/c10893781.html"
+    },
+    {
+      "name": "沪深300",
+      "value": 3954.57,
+      "change_pct": -0.76,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-20/c10893781.html"
+    },
+    {
+      "name": "北证50",
+      "value": 759.9,
+      "change_pct": -4.85,
+      "as_of": "2026-11-20T15:00:00+08:00",
+      "source_url": "https://stock.cngold.org/c/2026-11-20/c10893781.html"
+    }
+  ],
+  "sources": [
+    {
+      "title": "央视网11月22日新闻联播完整节目提要",
+      "url": "https://tv.cctv.com/2026/11/22/VIDEB3G5QWgDZMy8pYc17ULR261122.shtml"
+    },
+    {
+      "title": "央视网11月22日前十月财政收支",
+      "url": "https://tv.cctv.com/2026/11/22/VIDEHAdHqUkX66iecc1UxkHl261122.shtml"
+    },
+    {
+      "title": "央视网11月22日服务消费",
+      "url": "https://tv.cctv.com/2026/11/22/VIDEUCGkxpNpZRaeAZ0VlbYn261122.shtml"
+    },
+    {
+      "title": "央视网新闻联播节目目录（11月20日及11月22日）",
+      "url": "https://tv.cctv.com/lm/xwlb/index.shtml?innovation=19662"
+    },
+    {
+      "title": "11月21日新闻联播第三方节目目录（待央视复核）",
+      "url": "https://www.cuobiezi.net/news/cctv/xwlb/index"
+    },
+    {
+      "title": "每日经济新闻11月20日收盘",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-20/doc-inizkizc5583458.shtml"
+    },
+    {
+      "title": "金投网11月20日收盘指数",
+      "url": "https://stock.cngold.org/c/2026-11-20/c10893781.html"
+    },
+    {
+      "title": "央广财经11月20日收盘",
+      "url": "https://finance.eastmoney.com/a/202611203936074987.html"
+    }
+  ],
+  "quality": {
+    "status": "DEGRADED",
+    "gaps": [
+      "11月21日官方完整视频目录及分条时长未逐项核验",
+      "11月22日完整节目与单条视频时长未独立测量",
+      "三日精确节目时长、视频镜头/同框信息缺失",
+      "龙虎榜、融资融券、涨跌停统一口径未核验",
+      "政策对上市公司收入、订单与盈利的直接传导证据不足"
+    ]
+  },
+  "market_context": {
+    "is_today_market": false,
+    "turnover_sh_sz_cny_100m": 14222,
+    "advancers_sh_sz": 313,
+    "decliners_sh_sz": 5236,
+    "advance_decline_sample": "媒体沪深样本，ST及新股细则未完全统一",
+    "turnover_source_url": "https://stock.cngold.org/c/2026-11-20/c10893781.html"
+  },
+  "candidate_topics": [
+    {
+      "title": "具身智能数据国家标准研制",
+      "score": null,
+      "confidence": "低",
+      "summary": "11月22日节目快讯出现，缺标准草案、强制属性、执行期限和公司订单证据",
+      "sources": [
+        "https://tv.cctv.com/2026/11/22/VIDEB3G5QWgDZMy8pYc17ULR261122.shtml"
+      ]
+    },
+    {
+      "title": "前十个月财政收入与支出",
+      "score": null,
+      "confidence": "中",
+      "summary": "央视披露财政收入同比增长4.9%、支出同比增长1%；为统计信息，非当晚新增财政刺激",
+      "sources": [
+        "https://tv.cctv.com/2026/11/22/VIDEHAdHqUkX66iecc1UxkHl261122.shtml"
+      ]
+    },
+    {
+      "title": "服务消费",
+      "score": null,
+      "confidence": "中",
+      "summary": "服务零售同比增长4.9%，未形成可验证企业盈利映射",
+      "sources": [
+        "https://tv.cctv.com/2026/11/22/VIDEUCGkxpNpZRaeAZ0VlbYn261122.shtml"
+      ]
+    }
+  ]
+}

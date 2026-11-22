@@ -1,0 +1,22 @@
+{
+  "schema_version": 2,
+  "run_key": "MARKET-2026-11-22-2030",
+  "agent": "market",
+  "date": "2026-11-22",
+  "scheduled_time": "20:30",
+  "title": "新闻联播 × A股综合研究日报｜2026-11-22",
+  "summary": "周日非交易日；央视11月22日12条节目目录可核，财政、服务消费与具身智能标准仅作候选，TOP0，审慎降级。",
+  "status": "DEGRADED",
+  "files": {
+    "md": {
+      "path": "reports/market/2026/11/22/MARKET-2026-11-22-2030/report.md",
+      "bytes": 9696,
+      "sha256": "b368215dd97ee6affd606c429b53a34bb636c5139752f279cbe0587787c60d35"
+    },
+    "json": {
+      "path": "reports/market/2026/11/22/MARKET-2026-11-22-2030/data.json",
+      "bytes": 4426,
+      "sha256": "3942d585977c4b08cc42f32899fb26f1d5b7890d9d78a93c040dfc2f9700cb54"
+    }
+  }
+}
