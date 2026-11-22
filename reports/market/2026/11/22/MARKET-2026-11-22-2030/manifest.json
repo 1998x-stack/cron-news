@@ -11,12 +11,12 @@
     "md": {
       "path": "reports/market/2026/11/22/MARKET-2026-11-22-2030/report.md",
       "bytes": 9696,
-      "sha256": "dea43f331d5f3bc49124a38e9180d431175974ffa69bd24948e59a2685e71e18"
+      "sha256": "b368215dd97ee6affd606c429b53a34bb636c5139752f279cbe0587787c60d35"
     },
     "json": {
       "path": "reports/market/2026/11/22/MARKET-2026-11-22-2030/data.json",
       "bytes": 4426,
-      "sha256": "856648f6b3efe4e37fee5044ddbec60839d3dc8eb6a60cfd252d8148c65cdf22"
+      "sha256": "3942d585977c4b08cc42f32899fb26f1d5b7890d9d78a93c040dfc2f9700cb54"
     }
   }
 }
