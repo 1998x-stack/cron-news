@@ -2,6 +2,20 @@
   "schema_version": 2,
   "reports": [
     {
+      "run_key": "MARKET-2026-11-23-2030",
+      "agent": "market",
+      "date": "2026-11-23",
+      "scheduled_time": "20:30",
+      "title": "新闻联播 × A股综合研究日报｜2026-11-23",
+      "summary": "A股广度修复，23日晚间节目完整目录未核，TOP0，审慎降级。",
+      "status": "DEGRADED",
+      "schema_version": 2,
+      "files": {
+        "md": "reports/market/2026/11/23/MARKET-2026-11-23-2030/report.md",
+        "json": "reports/market/2026/11/23/MARKET-2026-11-23-2030/data.json"
+      }
+    },
+    {
       "run_key": "MARKET-2026-11-22-2030",
       "agent": "market",
       "date": "2026-11-22",
