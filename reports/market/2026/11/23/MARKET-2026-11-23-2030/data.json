@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "run_key": "MARKET-2026-11-23-2030",
+  "agent": "market",
+  "as_of": "2026-11-23T20:32:27+08:00",
+  "market_date": "2026-11-23",
+  "signals": [],
+  "indices": [
+    {
+      "name": "上证指数",
+      "value": 3538.95,
+      "change_pct": 0.15,
+      "as_of": "2026-11-23T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261123/c682101377.shtml"
+    },
+    {
+      "name": "深证成指",
+      "value": 10454.37,
+      "change_pct": 1.93,
+      "as_of": "2026-11-23T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261123/c682101377.shtml"
+    },
+    {
+      "name": "创业板指",
+      "value": 2280.2,
+      "change_pct": 3.08,
+      "as_of": "2026-11-23T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261123/c682101377.shtml"
+    },
+    {
+      "name": "沪深300",
+      "value": 3958.29,
+      "change_pct": 0.09,
+      "as_of": "2026-11-23T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261123/c682101377.shtml"
+    },
+    {
+      "name": "科创50",
+      "value": 1227.89,
+      "change_pct": -0.26,
+      "as_of": "2026-11-23T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261123/c682101377.shtml"
+    },
+    {
+      "name": "北证50",
+      "value": 795.38,
+      "change_pct": 4.67,
+      "as_of": "2026-11-23T15:00:00+08:00",
+      "source_url": "https://news.10jqka.com.cn/20261123/c682101377.shtml"
+    }
+  ],
+  "sources": [
+    {
+      "title": "同花顺11月23日收盘",
+      "url": "https://news.10jqka.com.cn/20261123/c682101377.shtml"
+    },
+    {
+      "title": "21世纪经济报道收评",
+      "url": "https://finance.eastmoney.com/a/202611233937239827.html"
+    },
+    {
+      "title": "每日经济新闻收评",
+      "url": "https://finance.sina.com.cn/jjxw/2026-11-23/doc-iniztfnh0608196.shtml"
+    },
+    {
+      "title": "新闻联播第三方目录",
+      "url": "https://cn.govopendata.com/xinwenlianbo/"
+    },
+    {
+      "title": "央视分条转载",
+      "url": "https://cuobiezi.net/news/cctv/xwlb/index"
+    }
+  ],
+  "quality": {
+    "status": "DEGRADED",
+    "gaps": [
+      "23日央视完整节目目录缺失",
+      "三日节目时长与分类比例未知",
+      "不同媒体上涨家数统计样本不一致",
+      "融资融券、龙虎榜和沪深分市场精确成交未核验"
+    ]
+  }
+}
